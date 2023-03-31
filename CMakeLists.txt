@@ -10,5 +10,8 @@ include_directories(${Python3_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_executable(boost_log_python_poc main.cpp)
 target_compile_definitions(boost_log_python_poc PUBLIC "BOOST_ALL_DYN_LINK" "$<$<CONFIG:Debug>:BOOST_DEBUG_PYTHON>" "$<$<CONFIG:Debug>:Py_DEBUG>")
+target_compile_definitions(boost_log_python_poc PUBLIC BOOST_USE_WINAPI_VERSION=0x0A00)
+target_compile_definitions(boost_log_python_poc PUBLIC _WIN32_WINNT=0x0A00)
+target_compile_definitions(boost_log_python_poc PUBLIC WINVER=0x0A00)
 
 target_link_libraries(boost_log_python_poc PRIVATE ${Python3_LIBRARIES} ${Boost_LIBRARIES})
