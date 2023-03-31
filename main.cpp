@@ -1,4 +1,5 @@
 #define PY_SSIZE_T_CLEAN
+#include <Windows.h>
 #include <Python.h>
 #include "boost/python.hpp"
 #include "boost/log/trivial.hpp"

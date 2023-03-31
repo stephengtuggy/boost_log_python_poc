@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 FIND_PACKAGE(Python3 REQUIRED COMPONENTS Development Interpreter)
 SET(BOOST_PYTHON_COMPONENT "python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}")
-FIND_PACKAGE(Boost REQUIRED COMPONENTS ${BOOST_PYTHON_COMPONENT} )
+FIND_PACKAGE(Boost REQUIRED COMPONENTS ${BOOST_PYTHON_COMPONENT} log log_setup)
 include_directories(${Python3_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_executable(boost_log_python_poc main.cpp)
