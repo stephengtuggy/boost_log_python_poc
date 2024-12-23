@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 #
-# Copyright © 2023 Stephen G. Tuggy
+# Copyright © 2023-2024 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -50,8 +50,8 @@ FIND_PACKAGE(Boost REQUIRED COMPONENTS ${BOOST_PYTHON_COMPONENT} log log_setup)
 include_directories(${Python3_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_executable(boost_log_python_poc main.cpp)
-target_compile_definitions(boost_log_python_poc PUBLIC "BOOST_ALL_DYN_LINK" "$<$<CONFIG:Debug>:BOOST_DEBUG_PYTHON>" "$<$<CONFIG:Debug>:Py_DEBUG>")
 if (WIN32)
+    target_compile_definitions(boost_log_python_poc PUBLIC "BOOST_ALL_DYN_LINK" "$<$<CONFIG:Debug>:BOOST_DEBUG_PYTHON>" "$<$<CONFIG:Debug>:Py_DEBUG>")
     target_compile_definitions(boost_log_python_poc PUBLIC BOOST_USE_WINAPI_VERSION=0x0A00)
     target_compile_definitions(boost_log_python_poc PUBLIC _WIN32_WINNT=0x0A00)
     target_compile_definitions(boost_log_python_poc PUBLIC WINVER=0x0A00)
