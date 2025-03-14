@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 #
-# Copyright © 2023-2024 Stephen G. Tuggy
+# Copyright © 2023-2025 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -27,7 +27,7 @@ IF (POLICY CMP0087)
 ENDIF ()
 
 IF (POLICY CMP0167)
-    CMAKE_POLICY (SET CMP0167 OLD)
+    CMAKE_POLICY (SET CMP0167 NEW)
 ENDIF (POLICY CMP0167)
 
 project(boost_log_python_poc
