@@ -32,7 +32,7 @@ ENDIF (POLICY CMP0167)
 
 project(boost_log_python_poc
         LANGUAGES CXX
-        VERSION 0.1.1)
+        VERSION 0.1.2)
 
 set(CMAKE_CXX_STANDARD 11)
 SET(CMAKE_CXX_STANDARD_REQUIRED TRUE)
