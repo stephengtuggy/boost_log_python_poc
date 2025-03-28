@@ -46,15 +46,15 @@ jobs:
                     - 'GLVND'
                 ENABLE_PIE:
                     - 'ON'
-            steps:
-                - name: Check out repository
-                  uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-                  with:
-                      fetch-depth: 2
-                      submodules: false
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              with:
+                  fetch-depth: 2
+                  submodules: false
 
-                - name: Build and Test
-                  env:
-                      COMPILER: ${{ matrix.COMPILER }}
-                      FLAGS:    '-DOpenGL_GL_PREFERENCE=${{ matrix.OpenGL_GL_PREFERENCE }} -DENABLE_PIE=${{ matrix.ENABLE_PIE }}'
-                  run: script/docker-entrypoint.sh $FLAGS
+            - name: Build and Test
+              env:
+                  COMPILER: ${{ matrix.COMPILER }}
+                  FLAGS:    '-DOpenGL_GL_PREFERENCE=${{ matrix.OpenGL_GL_PREFERENCE }} -DENABLE_PIE=${{ matrix.ENABLE_PIE }}'
+              run: script/docker-entrypoint.sh $FLAGS
