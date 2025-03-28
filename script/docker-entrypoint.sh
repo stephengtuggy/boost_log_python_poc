@@ -36,7 +36,7 @@ then
 fi
 
 echo "Re-run bootstrap"
-script/bootstrap
+sudo script/bootstrap
 
 if [ "$CC" == "clang" ]
 then
