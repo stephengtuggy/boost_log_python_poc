@@ -67,18 +67,14 @@ jobs:
           fetch-depth: 2
           submodules: false
 
-      # Ensure PRs are built against the PR Head
-      # As opposed to the merge commit
-      - name: Move to PR HEAD
-        run: git checkout ${{ github.event.pull_request.head.sha }}
-
-      - name: Extract short SHA
-        shell: bash
+      - name: Extract tag name and short SHA
         run: |
-          echo "SHORT_SHA=`git rev-parse --short ${{ github.event.pull_request.head.sha }}`" >> $GITHUB_ENV
-      - name: Test short SHA
+            echo "TAG_NAME=$(echo ${GITHUB_REF#refs/tags/} | sed 's/\//_/g')" >> $GITHUB_ENV
+            echo "SHORT_SHA=`git rev-parse --short HEAD`" >> $GITHUB_ENV
+      - name: Test tag name and short SHA
         run: |
-          echo "${SHORT_SHA}"
+            echo "${TAG_NAME}"
+            echo "${SHORT_SHA}"
 
       - name: Build and Test
         env:
