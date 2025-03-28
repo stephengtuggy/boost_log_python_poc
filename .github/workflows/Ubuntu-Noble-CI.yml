@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-name: Linux-CI
+name: Ubuntu-Noble-CI
 
 # Controls when the action will run.
 on:
