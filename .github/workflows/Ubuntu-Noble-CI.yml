@@ -26,7 +26,6 @@ name: Ubuntu-Noble-CI
 on:
     push:
     pull_request:
-
     # Allows you to run this workflow manually from the Actions tab
     workflow_dispatch:
 
@@ -34,11 +33,9 @@ jobs:
     build_and_test:
         runs-on: ubuntu-24.04
         continue-on-error: false
-
         defaults:
             run:
                 shell: bash
-
         strategy:
             fail-fast: false
             matrix:
@@ -49,7 +46,6 @@ jobs:
                     - 'GLVND'
                 ENABLE_PIE:
                     - 'ON'
-
             steps:
                 - name: Check out repository
                   uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
