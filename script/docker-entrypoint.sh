@@ -25,6 +25,16 @@ set -e
 
 echo "docker-entrypoint.sh: Flags passed in: $FLAGS"
 
+if [ "$COMPILER" == "gcc" ]
+then
+    export CC=gcc
+    export CXX=g++
+elif [ "$COMPILER" == "clang" ]
+then
+    export CC=clang
+    export CXX=clang++
+fi
+
 echo "Re-run bootstrap"
 script/bootstrap
 
