@@ -27,14 +27,14 @@ IF (POLICY CMP0087)
 ENDIF ()
 
 IF (POLICY CMP0167)
-    CMAKE_POLICY (SET CMP0167 NEW)
+    CMAKE_POLICY (SET CMP0167 OLD)
 ENDIF (POLICY CMP0167)
 
 project(boost_log_python_poc
         LANGUAGES CXX
-        VERSION 0.1.2)
+        VERSION 0.1.3)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 SET(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 SET(CMAKE_CXX_EXTENSIONS ON)
 
@@ -59,11 +59,39 @@ FIND_PACKAGE(Boost REQUIRED COMPONENTS ${BOOST_PYTHON_COMPONENT} log log_setup)
 include_directories(${Python3_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_executable(boost_log_python_poc main.cpp)
+target_compile_definitions(boost_log_python_poc PUBLIC "BOOST_ALL_DYN_LINK" "$<$<CONFIG:Debug>:BOOST_DEBUG_PYTHON>")
 if (WIN32)
-    target_compile_definitions(boost_log_python_poc PUBLIC "BOOST_ALL_DYN_LINK" "$<$<CONFIG:Debug>:BOOST_DEBUG_PYTHON>" "$<$<CONFIG:Debug>:Py_DEBUG>")
     target_compile_definitions(boost_log_python_poc PUBLIC BOOST_USE_WINAPI_VERSION=0x0A00)
     target_compile_definitions(boost_log_python_poc PUBLIC _WIN32_WINNT=0x0A00)
     target_compile_definitions(boost_log_python_poc PUBLIC WINVER=0x0A00)
+    target_compile_definitions(boost_log_python_poc PUBLIC "$<$<CONFIG:Debug>:Py_DEBUG>")
 endif ()
 
 target_link_libraries(boost_log_python_poc PRIVATE ${Python3_LIBRARIES} ${Boost_LIBRARIES})
+
+# Should we install gtest?
+OPTION(INSTALL_GTEST "Should we download and install GTest?" ON)
+
+# Should we run gtest?
+OPTION(USE_GTEST "Should we build and run the unit tests using GTest?" ON)
+
+IF (INSTALL_GTEST OR USE_GTEST)
+    MESSAGE(STATUS "Configuring Unit Tests")
+    ENABLE_TESTING()
+
+    IF (INSTALL_GTEST)
+        INCLUDE(FetchContent)
+        FetchContent_Declare(
+                googletest
+                GIT_REPOSITORY https://github.com/google/googletest.git
+                GIT_TAG        v1.15.2
+        )
+
+        # Set custom variables, policies, etc.
+
+        # For Windows: Prevent overriding the parent project's compiler/linker settings
+        SET(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+        FetchContent_MakeAvailable(googletest)
+    ENDIF (INSTALL_GTEST)
+ENDIF (INSTALL_GTEST OR USE_GTEST)
