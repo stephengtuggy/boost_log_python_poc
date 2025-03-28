@@ -67,3 +67,30 @@ if (WIN32)
 endif ()
 
 target_link_libraries(boost_log_python_poc PRIVATE ${Python3_LIBRARIES} ${Boost_LIBRARIES})
+
+# Should we install gtest?
+OPTION(INSTALL_GTEST "Should we download and install GTest?" ON)
+
+# Should we run gtest?
+OPTION(USE_GTEST "Should we build and run the unit tests using GTest?" ON)
+
+IF (INSTALL_GTEST OR USE_GTEST)
+    MESSAGE(STATUS "Configuring Unit Tests")
+    ENABLE_TESTING()
+
+    IF (INSTALL_GTEST)
+        INCLUDE(FetchContent)
+        FetchContent_Declare(
+                googletest
+                GIT_REPOSITORY https://github.com/google/googletest.git
+                GIT_TAG        v1.15.2
+        )
+
+        # Set custom variables, policies, etc.
+
+        # For Windows: Prevent overriding the parent project's compiler/linker settings
+        SET(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+        FetchContent_MakeAvailable(googletest)
+    ENDIF (INSTALL_GTEST)
+ENDIF (INSTALL_GTEST OR USE_GTEST)
