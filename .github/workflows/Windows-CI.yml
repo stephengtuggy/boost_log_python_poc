@@ -44,7 +44,7 @@ jobs:
             preset-name: VS2022Win64-pie-enabled-RelWithDebInfo
           - os: windows-2019
             build-type: Debug
-            preset-name: VS2019Win64-pie-disabled-Debug
+            preset-name: VS2019Win64-pie-disabled-debug
 
     env:
       # Indicates the location of vcpkg
