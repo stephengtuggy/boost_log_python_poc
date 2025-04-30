@@ -41,7 +41,7 @@ jobs:
         include:
           - os: windows-2022
             build-type: Release
-            preset-name: VS2022Win64-pie-enabled-Release
+            preset-name: VS2022Win64-pie-enabled-release
           - os: windows-2019
             build-type: Debug
             preset-name: VS2019Win64-pie-disabled-debug
