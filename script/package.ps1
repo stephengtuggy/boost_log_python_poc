@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 #
-# Copyright © 2023-2025 Stephen G. Tuggy
+# Copyright © 2025 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -25,5 +25,4 @@ param(
     [String]$BuildType = "RelWithDebInfo" # You can also specify "Debug" or "Release"
 )
 
-cmake --preset "$PresetName"
-cmake --build --preset "build-$PresetName" -v
+cpack -V --preset "package-$PresetName"

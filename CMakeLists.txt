@@ -27,7 +27,7 @@ IF (POLICY CMP0087)
 ENDIF ()
 
 IF (POLICY CMP0167)
-    CMAKE_POLICY (SET CMP0167 OLD)
+    CMAKE_POLICY (SET CMP0167 NEW)
 ENDIF (POLICY CMP0167)
 
 SET(CPACK_BUILD_CONFIG ${CMAKE_BUILD_TYPE})
@@ -81,22 +81,6 @@ OPTION(INSTALL_GTEST "Should we download and install GTest?" ON)
 OPTION(USE_GTEST "Should we build and run the unit tests using GTest?" ON)
 
 INCLUDE(GNUInstallDirs)
-
-## As per https://braintrekking.wordpress.com/2013/04/27/dll-hell-how-to-include-microsoft-redistributable-runtime-libraries-in-your-cmakecpack-project/
-#INSTALL(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT system_libraries)
-#
-#IF (CMAKE_SYSTEM_NAME STREQUAL Windows)
-#    FILE(GLOB_RECURSE OurDependencies FOLLOW_SYMLINKS LIST_DIRECTORIES false
-#            ${CMAKE_SOURCE_DIR}/../*.dll
-#            ${CMAKE_SOURCE_DIR}/../bin/*.dll
-#            ${CMAKE_SOURCE_DIR}/*.dll
-#            ${CMAKE_SOURCE_DIR}/bin/*.dll
-#            ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/*.dll
-#            ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/bin/*.dll
-#            ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/${CPACK_BUILD_CONFIG}/*.dll
-#            ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/${CPACK_BUILD_CONFIG}/bin/*.dll)
-#    INSTALL(FILES ${OurDependencies} DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT system_libraries)
-#ENDIF ()
 
 SET(CPACK_PACKAGE_NAME "Boost_Log_Python_POC")
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Proof of Concept for Boost Log, Python, and Boost Python all working together")
