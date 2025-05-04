@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 
 IF (POLICY CMP0087)
     cmake_policy(SET CMP0087 NEW)
@@ -32,7 +32,7 @@ ENDIF (POLICY CMP0167)
 
 project(boost_log_python_poc
         LANGUAGES CXX
-        VERSION 0.1.3)
+        VERSION 0.1.4)
 
 set(CMAKE_CXX_STANDARD 14)
 SET(CMAKE_CXX_STANDARD_REQUIRED TRUE)
@@ -55,11 +55,15 @@ ENDIF (ENABLE_PIE)
 
 FIND_PACKAGE(Python3 REQUIRED COMPONENTS Development Interpreter)
 SET(BOOST_PYTHON_COMPONENT "python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}")
+
+MESSAGE(STATUS "Python library : ${Python3_LIBRARIES} (${Python3_VERSION})")
+MESSAGE(STATUS "Python include dir : ${Python3_INCLUDE_DIRS}")
+
 FIND_PACKAGE(Boost REQUIRED COMPONENTS ${BOOST_PYTHON_COMPONENT} log log_setup)
 include_directories(${Python3_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_executable(boost_log_python_poc main.cpp)
-target_compile_definitions(boost_log_python_poc PUBLIC "BOOST_ALL_DYN_LINK" "$<$<CONFIG:Debug>:BOOST_DEBUG_PYTHON>")
+target_compile_definitions(boost_log_python_poc PUBLIC "BOOST_PYTHON_NO_PY_SIGNATURES" "BOOST_ALL_DYN_LINK" "$<$<CONFIG:Debug>:BOOST_DEBUG_PYTHON>")
 if (WIN32)
     target_compile_definitions(boost_log_python_poc PUBLIC BOOST_USE_WINAPI_VERSION=0x0A00)
     target_compile_definitions(boost_log_python_poc PUBLIC _WIN32_WINNT=0x0A00)

@@ -1,8 +1,8 @@
 {
-    "version": 3,
+    "version": 6,
     "cmakeMinimumRequired": {
         "major": 3,
-        "minor": 16,
+        "minor": 21,
         "patch": 0
     },
     "configurePresets": [
@@ -11,7 +11,7 @@
             "hidden": true,
             "displayName": "Default Config",
             "description": "Default build using Ninja generator",
-            "generator": "Ninja Multi-Config",
+            "generator": "Ninja",
             "binaryDir": "build/${presetName}",
             "debug": {
                 "output": true
@@ -108,6 +108,160 @@
             }
         },
         {
+            "name": "macos-default",
+            "hidden": true,
+            "inherits": "default",
+            "displayName": "macOS Default",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            },
+            "environment": {
+                "VERBOSE": "ON"
+            },
+            "cacheVariables": {
+                "CMAKE_PREFIX_PATH": "/usr/local",
+                "CMAKE_FIND_FRAMEWORK": "LAST",
+                "PythonInstalledVia": "Homebrew"
+            }
+        },
+        {
+            "name": "macos-pie-enabled-debug",
+            "inherits": [
+                "macos-default",
+                "pie-enabled",
+                "debug"
+            ],
+            "displayName": "macOS, PIE Enabled, Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "macos-pie-enabled-release",
+            "inherits": [
+                "macos-default",
+                "pie-enabled",
+                "release"
+            ],
+            "displayName": "macOS, PIE Enabled, Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "macos-pie-disabled-debug",
+            "inherits": [
+                "macos-default",
+                "pie-disabled",
+                "debug"
+            ],
+            "displayName": "macOS, PIE Disabled, Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "macos-pie-disabled-release",
+            "inherits": [
+                "macos-default",
+                "pie-disabled",
+                "release"
+            ],
+            "displayName": "macOS, Pie Disabled, Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "macOS-MacPorts-default",
+            "hidden": true,
+            "inherits": "default",
+            "displayName": "macOS (MacPorts) Default",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            },
+            "environment": {
+                "VERBOSE": "ON"
+            },
+            "cacheVariables": {
+                "CMAKE_PREFIX_PATH": "/opt/local",
+                "Boost_INCLUDE_DIR": "/opt/local/libexec/boost/1.87/include",
+                "Boost_DIR": "/opt/local/libexec/boost/1.87/lib/cmake/Boost-1.87.0",
+                "CMAKE_FIND_FRAMEWORK": "LAST",
+                "PythonInstalledVia": "MacPorts",
+                "INSTALL_GTEST": "OFF",
+                "USE_GTEST": "OFF"
+            }
+        },
+        {
+            "name": "macOS-MacPorts-pie-enabled-debug",
+            "inherits": [
+                "macOS-MacPorts-default",
+                "pie-enabled",
+                "debug"
+            ],
+            "displayName": "macOS (MacPorts), PIE Enabled, Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "macOS-MacPorts-pie-enabled-release",
+            "inherits": [
+                "macOS-MacPorts-default",
+                "pie-enabled",
+                "release"
+            ],
+            "displayName": "macOS (MacPorts), PIE Enabled, Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "macOS-MacPorts-pie-disabled-debug",
+            "inherits": [
+                "macOS-MacPorts-default",
+                "pie-disabled",
+                "debug"
+            ],
+            "displayName": "macOS (MacPorts), PIE Disabled, Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "macOS-MacPorts-pie-disabled-release",
+            "inherits": [
+                "macOS-MacPorts-default",
+                "pie-disabled",
+                "release"
+            ],
+            "displayName": "macOS (MacPorts), Pie Disabled, Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
             "name": "windows-base",
             "hidden": true,
             "inherits": "default",
@@ -141,12 +295,6 @@
             "inherits": "windows-base",
             "displayName": "Visual Studio 2019 on Windows x64",
             "generator": "Visual Studio 16 2019",
-            "architecture": "X64",
-            "vendor": {
-                "jetbrains.com/clion": {
-                    "toolchain": "Visual Studio"
-                }
-            },
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -159,12 +307,6 @@
             "inherits": "windows-base",
             "displayName": "Visual Studio 2022 on Windows x64",
             "generator": "Visual Studio 17 2022",
-            "architecture": "X64",
-            "vendor": {
-                "jetbrains.com/clion": {
-                    "toolchain": "Visual Studio"
-                }
-            },
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -395,6 +537,94 @@
                 "type": "equals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Linux"
+            }
+        },
+        {
+            "name": "build-macos-pie-enabled-debug",
+            "configurePreset": "macos-pie-enabled-debug",
+            "displayName": "macOS, PIE Enabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "build-macos-pie-enabled-release",
+            "configurePreset": "macos-pie-enabled-release",
+            "displayName": "macOS, PIE Enabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "build-macos-pie-disabled-debug",
+            "configurePreset": "macos-pie-disabled-debug",
+            "displayName": "macOS, PIE Disabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "build-macos-pie-disabled-release",
+            "configurePreset": "macos-pie-disabled-release",
+            "displayName": "macOS, PIE Disabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "build-macOS-MacPorts-pie-enabled-debug",
+            "configurePreset": "macOS-MacPorts-pie-enabled-debug",
+            "displayName": "macOS (MacPorts), PIE Enabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "build-macOS-MacPorts-pie-enabled-release",
+            "configurePreset": "macOS-MacPorts-pie-enabled-release",
+            "displayName": "macOS (MacPorts), PIE Enabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "build-macOS-MacPorts-pie-disabled-debug",
+            "configurePreset": "macOS-MacPorts-pie-disabled-debug",
+            "displayName": "macOS (MacPorts), PIE Disabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "build-macOS-MacPorts-pie-disabled-release",
+            "configurePreset": "macOS-MacPorts-pie-disabled-release",
+            "displayName": "macOS (MacPorts), PIE Disabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
             }
         },
         {
