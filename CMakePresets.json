@@ -36,6 +36,15 @@
             }
         },
         {
+            "name": "RelWithDebInfo",
+            "hidden": true,
+            "displayName": "RelWithDebInfo",
+            "inherits": "default",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+            }
+        },
+        {
             "name": "pie-enabled",
             "hidden": true,
             "inherits": "default",
@@ -82,6 +91,19 @@
             }
         },
         {
+            "name": "linux-ninja-pie-enabled-RelWithDebInfo",
+            "inherits": [
+                "default",
+                "pie-enabled",
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
             "name": "linux-ninja-pie-disabled-debug",
             "inherits": [
                 "default",
@@ -100,6 +122,19 @@
                 "default",
                 "pie-disabled",
                 "release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "linux-ninja-pie-disabled-RelWithDebInfo",
+            "inherits": [
+                "default",
+                "pie-disabled",
+                "RelWithDebInfo"
             ],
             "condition": {
                 "type": "equals",
@@ -155,6 +190,20 @@
             }
         },
         {
+            "name": "macos-pie-enabled-RelWithDebInfo",
+            "inherits": [
+                "macos-default",
+                "pie-enabled",
+                "RelWithDebInfo"
+            ],
+            "displayName": "macOS, PIE Enabled, RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
             "name": "macos-pie-disabled-debug",
             "inherits": [
                 "macos-default",
@@ -176,6 +225,20 @@
                 "release"
             ],
             "displayName": "macOS, Pie Disabled, Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "macos-pie-disabled-RelWithDebInfo",
+            "inherits": [
+                "macos-default",
+                "pie-disabled",
+                "RelWithDebInfo"
+            ],
+            "displayName": "macOS, Pie Disabled, RelWithDebInfo",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -234,6 +297,20 @@
             }
         },
         {
+            "name": "macOS-MacPorts-pie-enabled-RelWithDebInfo",
+            "inherits": [
+                "macOS-MacPorts-default",
+                "pie-enabled",
+                "RelWithDebInfo"
+            ],
+            "displayName": "macOS (MacPorts), PIE Enabled, RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
             "name": "macOS-MacPorts-pie-disabled-debug",
             "inherits": [
                 "macOS-MacPorts-default",
@@ -255,6 +332,20 @@
                 "release"
             ],
             "displayName": "macOS (MacPorts), Pie Disabled, Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "macOS-MacPorts-pie-disabled-RelWithDebInfo",
+            "inherits": [
+                "macOS-MacPorts-default",
+                "pie-disabled",
+                "RelWithDebInfo"
+            ],
+            "displayName": "macOS (MacPorts), Pie Disabled, RelWithDebInfo",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -354,6 +445,20 @@
             }
         },
         {
+            "name": "windows-ninja-pie-enabled-RelWithDebInfo",
+            "displayName": "Windows, Ninja, PIE Enabled, RelWithDebInfo",
+            "inherits": [
+                "ninja-windows",
+                "pie-enabled",
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
             "name": "windows-ninja-pie-disabled-debug",
             "displayName": "Windows, Ninja, PIE Disabled, Debug",
             "inherits": [
@@ -374,6 +479,20 @@
                 "ninja-windows",
                 "pie-disabled",
                 "release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "windows-ninja-pie-disabled-RelWithDebInfo",
+            "displayName": "Windows, Ninja, PIE Disabled, RelWithDebInfo",
+            "inherits": [
+                "ninja-windows",
+                "pie-disabled",
+                "RelWithDebInfo"
             ],
             "condition": {
                 "type": "equals",
@@ -410,6 +529,20 @@
             }
         },
         {
+            "name": "VS2019Win64-pie-enabled-RelWithDebInfo",
+            "displayName": "VS2019Win64, PIE Enabled, RelWithDebInfo",
+            "inherits": [
+                "VS2019Win64",
+                "pie-enabled",
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
             "name": "VS2019Win64-pie-disabled-debug",
             "displayName": "VS2019Win64, PIE Disabled, Debug",
             "inherits": [
@@ -430,6 +563,20 @@
                 "VS2019Win64",
                 "pie-disabled",
                 "release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VS2019Win64-pie-disabled-RelWithDebInfo",
+            "displayName": "VS2019Win64, PIE Disabled, RelWithDebInfo",
+            "inherits": [
+                "VS2019Win64",
+                "pie-disabled",
+                "RelWithDebInfo"
             ],
             "condition": {
                 "type": "equals",
@@ -466,6 +613,20 @@
             }
         },
         {
+            "name": "VS2022Win64-pie-enabled-RelWithDebInfo",
+            "displayName": "VS2022Win64, PIE Enabled, RelWithDebInfo",
+            "inherits": [
+                "VS2022Win64",
+                "pie-enabled",
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
             "name": "VS2022Win64-pie-disabled-debug",
             "displayName": "VS2022Win64, PIE Disabled, Debug",
             "inherits": [
@@ -486,6 +647,20 @@
                 "VS2022Win64",
                 "pie-disabled",
                 "release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VS2022Win64-pie-disabled-RelWithDebInfo",
+            "displayName": "VS2022Win64, PIE Disabled, RelWithDebInfo",
+            "inherits": [
+                "VS2022Win64",
+                "pie-disabled",
+                "RelWithDebInfo"
             ],
             "condition": {
                 "type": "equals",
@@ -518,6 +693,17 @@
             }
         },
         {
+            "name": "build-linux-ninja-pie-enabled-RelWithDebInfo",
+            "configurePreset": "linux-ninja-pie-enabled-RelWithDebInfo",
+            "displayName": "Linux, PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
             "name": "build-linux-ninja-pie-disabled-debug",
             "configurePreset": "linux-ninja-pie-disabled-debug",
             "displayName": "Linux, PIE Disabled, Debug",
@@ -533,6 +719,17 @@
             "configurePreset": "linux-ninja-pie-disabled-release",
             "displayName": "Linux, PIE Disabled, Release",
             "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "build-linux-ninja-pie-disabled-RelWithDebInfo",
+            "configurePreset": "linux-ninja-pie-disabled-RelWithDebInfo",
+            "displayName": "Linux, PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -562,6 +759,17 @@
             }
         },
         {
+            "name": "build-macos-pie-enabled-RelWithDebInfo",
+            "configurePreset": "macos-pie-enabled-RelWithDebInfo",
+            "displayName": "macOS, PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
             "name": "build-macos-pie-disabled-debug",
             "configurePreset": "macos-pie-disabled-debug",
             "displayName": "macOS, PIE Disabled, Debug",
@@ -577,6 +785,17 @@
             "configurePreset": "macos-pie-disabled-release",
             "displayName": "macOS, PIE Disabled, Release",
             "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "build-macos-pie-disabled-RelWithDebInfo",
+            "configurePreset": "macos-pie-disabled-RelWithDebInfo",
+            "displayName": "macOS, PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -606,6 +825,17 @@
             }
         },
         {
+            "name": "build-macOS-MacPorts-pie-enabled-RelWithDebInfo",
+            "configurePreset": "macOS-MacPorts-pie-enabled-RelWithDebInfo",
+            "displayName": "macOS (MacPorts), PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
             "name": "build-macOS-MacPorts-pie-disabled-debug",
             "configurePreset": "macOS-MacPorts-pie-disabled-debug",
             "displayName": "macOS (MacPorts), PIE Disabled, Debug",
@@ -621,6 +851,17 @@
             "configurePreset": "macOS-MacPorts-pie-disabled-release",
             "displayName": "macOS (MacPorts), PIE Disabled, Release",
             "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "build-macOS-MacPorts-pie-disabled-RelWithDebInfo",
+            "configurePreset": "macOS-MacPorts-pie-disabled-RelWithDebInfo",
+            "displayName": "macOS (MacPorts), PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -650,6 +891,17 @@
             }
         },
         {
+            "name": "build-windows-ninja-pie-enabled-RelWithDebInfo",
+            "configurePreset": "windows-ninja-pie-enabled-RelWithDebInfo",
+            "displayName": "Windows, Ninja, PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
             "name": "build-windows-ninja-pie-disabled-debug",
             "configurePreset": "windows-ninja-pie-disabled-debug",
             "displayName": "Windows, Ninja, PIE Disabled, Debug",
@@ -665,6 +917,17 @@
             "configurePreset": "windows-ninja-pie-disabled-release",
             "displayName": "Windows, Ninja, PIE Disabled, Release",
             "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "build-windows-ninja-pie-disabled-RelWithDebInfo",
+            "configurePreset": "windows-ninja-pie-disabled-RelWithDebInfo",
+            "displayName": "Windows, Ninja, PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -694,6 +957,17 @@
             }
         },
         {
+            "name": "build-VS2019Win64-pie-enabled-RelWithDebInfo",
+            "configurePreset": "VS2019Win64-pie-enabled-RelWithDebInfo",
+            "displayName": "VS2019Win64, PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
             "name": "build-VS2019Win64-pie-disabled-debug",
             "configurePreset": "VS2019Win64-pie-disabled-debug",
             "displayName": "VS2019Win64, PIE Disabled, Debug",
@@ -709,6 +983,17 @@
             "configurePreset": "VS2019Win64-pie-disabled-release",
             "displayName": "VS2019Win64, PIE Disabled, Release",
             "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "build-VS2019Win64-pie-disabled-RelWithDebInfo",
+            "configurePreset": "VS2019Win64-pie-disabled-RelWithDebInfo",
+            "displayName": "VS2019Win64, PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -738,6 +1023,17 @@
             }
         },
         {
+            "name": "build-VS2022Win64-pie-enabled-RelWithDebInfo",
+            "configurePreset": "VS2022Win64-pie-enabled-RelWithDebInfo",
+            "displayName": "VS2022Win64, PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
             "name": "build-VS2022Win64-pie-disabled-debug",
             "configurePreset": "VS2022Win64-pie-disabled-debug",
             "displayName": "VS2022Win64, PIE Disabled, Debug",
@@ -758,6 +1054,886 @@
                 "lhs": "${hostSystemName}",
                 "rhs": "Windows"
             }
+        },
+        {
+            "name": "build-VS2022Win64-pie-disabled-RelWithDebInfo",
+            "configurePreset": "VS2022Win64-pie-disabled-RelWithDebInfo",
+            "displayName": "VS2022Win64, PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "test-linux-ninja-pie-enabled-debug",
+            "configurePreset": "linux-ninja-pie-enabled-debug",
+            "displayName": "Linux, PIE Enabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "test-linux-ninja-pie-enabled-release",
+            "configurePreset": "linux-ninja-pie-enabled-release",
+            "displayName": "Linux, PIE Enabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "test-linux-ninja-pie-enabled-RelWithDebInfo",
+            "configurePreset": "linux-ninja-pie-enabled-RelWithDebInfo",
+            "displayName": "Linux, PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "test-linux-ninja-pie-disabled-debug",
+            "configurePreset": "linux-ninja-pie-disabled-debug",
+            "displayName": "Linux, PIE Disabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "test-linux-ninja-pie-disabled-release",
+            "configurePreset": "linux-ninja-pie-disabled-release",
+            "displayName": "Linux, PIE Disabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "test-linux-ninja-pie-disabled-RelWithDebInfo",
+            "configurePreset": "linux-ninja-pie-disabled-RelWithDebInfo",
+            "displayName": "Linux, PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "test-macos-pie-enabled-debug",
+            "configurePreset": "macos-pie-enabled-debug",
+            "displayName": "macOS, PIE Enabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macos-pie-enabled-release",
+            "configurePreset": "macos-pie-enabled-release",
+            "displayName": "macOS, PIE Enabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macos-pie-enabled-RelWithDebInfo",
+            "configurePreset": "macos-pie-enabled-RelWithDebInfo",
+            "displayName": "macOS, PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macos-pie-disabled-debug",
+            "configurePreset": "macos-pie-disabled-debug",
+            "displayName": "macOS, PIE Disabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macos-pie-disabled-release",
+            "configurePreset": "macos-pie-disabled-release",
+            "displayName": "macOS, PIE Disabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macos-pie-disabled-RelWithDebInfo",
+            "configurePreset": "macos-pie-disabled-RelWithDebInfo",
+            "displayName": "macOS, PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macOS-MacPorts-pie-enabled-debug",
+            "configurePreset": "macOS-MacPorts-pie-enabled-debug",
+            "displayName": "macOS (MacPorts), PIE Enabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macOS-MacPorts-pie-enabled-release",
+            "configurePreset": "macOS-MacPorts-pie-enabled-release",
+            "displayName": "macOS (MacPorts), PIE Enabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macOS-MacPorts-pie-enabled-RelWithDebInfo",
+            "configurePreset": "macOS-MacPorts-pie-enabled-RelWithDebInfo",
+            "displayName": "macOS (MacPorts), PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macOS-MacPorts-pie-disabled-debug",
+            "configurePreset": "macOS-MacPorts-pie-disabled-debug",
+            "displayName": "macOS (MacPorts), PIE Disabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macOS-MacPorts-pie-disabled-release",
+            "configurePreset": "macOS-MacPorts-pie-disabled-release",
+            "displayName": "macOS (MacPorts), PIE Disabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-macOS-MacPorts-pie-disabled-RelWithDebInfo",
+            "configurePreset": "macOS-MacPorts-pie-disabled-RelWithDebInfo",
+            "displayName": "macOS (MacPorts), PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "test-windows-ninja-pie-enabled-debug",
+            "configurePreset": "windows-ninja-pie-enabled-debug",
+            "displayName": "Windows, Ninja, PIE Enabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-windows-ninja-pie-enabled-release",
+            "configurePreset": "windows-ninja-pie-enabled-release",
+            "displayName": "Windows, Ninja, PIE Enabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-windows-ninja-pie-enabled-RelWithDebInfo",
+            "configurePreset": "windows-ninja-pie-enabled-RelWithDebInfo",
+            "displayName": "Windows, Ninja, PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-windows-ninja-pie-disabled-debug",
+            "configurePreset": "windows-ninja-pie-disabled-debug",
+            "displayName": "Windows, Ninja, PIE Disabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-windows-ninja-pie-disabled-release",
+            "configurePreset": "windows-ninja-pie-disabled-release",
+            "displayName": "Windows, Ninja, PIE Disabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-windows-ninja-pie-disabled-RelWithDebInfo",
+            "configurePreset": "windows-ninja-pie-disabled-RelWithDebInfo",
+            "displayName": "Windows, Ninja, PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2019Win64-pie-enabled-debug",
+            "configurePreset": "VS2019Win64-pie-enabled-debug",
+            "displayName": "VS2019Win64, PIE Enabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2019Win64-pie-enabled-release",
+            "configurePreset": "VS2019Win64-pie-enabled-release",
+            "displayName": "VS2019Win64, PIE Enabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2019Win64-pie-enabled-RelWithDebInfo",
+            "configurePreset": "VS2019Win64-pie-enabled-RelWithDebInfo",
+            "displayName": "VS2019Win64, PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2019Win64-pie-disabled-debug",
+            "configurePreset": "VS2019Win64-pie-disabled-debug",
+            "displayName": "VS2019Win64, PIE Disabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2019Win64-pie-disabled-release",
+            "configurePreset": "VS2019Win64-pie-disabled-release",
+            "displayName": "VS2019Win64, PIE Disabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2019Win64-pie-disabled-RelWithDebInfo",
+            "configurePreset": "VS2019Win64-pie-disabled-RelWithDebInfo",
+            "displayName": "VS2019Win64, PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2022Win64-pie-enabled-debug",
+            "configurePreset": "VS2022Win64-pie-enabled-debug",
+            "displayName": "VS2022Win64, PIE Enabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2022Win64-pie-enabled-release",
+            "configurePreset": "VS2022Win64-pie-enabled-release",
+            "displayName": "VS2022Win64, PIE Enabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2022Win64-pie-enabled-RelWithDebInfo",
+            "configurePreset": "VS2022Win64-pie-enabled-RelWithDebInfo",
+            "displayName": "VS2022Win64, PIE Enabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2022Win64-pie-disabled-debug",
+            "configurePreset": "VS2022Win64-pie-disabled-debug",
+            "displayName": "VS2022Win64, PIE Disabled, Debug",
+            "configuration": "Debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2022Win64-pie-disabled-release",
+            "configurePreset": "VS2022Win64-pie-disabled-release",
+            "displayName": "VS2022Win64, PIE Disabled, Release",
+            "configuration": "Release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "test-VS2022Win64-pie-disabled-RelWithDebInfo",
+            "configurePreset": "VS2022Win64-pie-disabled-RelWithDebInfo",
+            "displayName": "VS2022Win64, PIE Disabled, RelWithDebInfo",
+            "configuration": "RelWithDebInfo",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        }
+    ],
+    "packagePresets": [
+        {
+            "name": "package-linux-ninja-pie-enabled-debug",
+            "configurePreset": "linux-ninja-pie-enabled-debug",
+            "displayName": "Linux, PIE Enabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "package-linux-ninja-pie-enabled-release",
+            "configurePreset": "linux-ninja-pie-enabled-release",
+            "displayName": "Linux, PIE Enabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "package-linux-ninja-pie-enabled-RelWithDebInfo",
+            "configurePreset": "linux-ninja-pie-enabled-RelWithDebInfo",
+            "displayName": "Linux, PIE Enabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "package-linux-ninja-pie-disabled-debug",
+            "configurePreset": "linux-ninja-pie-disabled-debug",
+            "displayName": "Linux, PIE Disabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "package-linux-ninja-pie-disabled-release",
+            "configurePreset": "linux-ninja-pie-disabled-release",
+            "displayName": "Linux, PIE Disabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "package-linux-ninja-pie-disabled-RelWithDebInfo",
+            "configurePreset": "linux-ninja-pie-disabled-RelWithDebInfo",
+            "displayName": "Linux, PIE Disabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "package-macos-pie-enabled-debug",
+            "configurePreset": "macos-pie-enabled-debug",
+            "displayName": "macOS, PIE Enabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macos-pie-enabled-release",
+            "configurePreset": "macos-pie-enabled-release",
+            "displayName": "macOS, PIE Enabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macos-pie-enabled-RelWithDebInfo",
+            "configurePreset": "macos-pie-enabled-RelWithDebInfo",
+            "displayName": "macOS, PIE Enabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macos-pie-disabled-debug",
+            "configurePreset": "macos-pie-disabled-debug",
+            "displayName": "macOS, PIE Disabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macos-pie-disabled-release",
+            "configurePreset": "macos-pie-disabled-release",
+            "displayName": "macOS, PIE Disabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macos-pie-disabled-RelWithDebInfo",
+            "configurePreset": "macos-pie-disabled-RelWithDebInfo",
+            "displayName": "macOS, PIE Disabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macOS-MacPorts-pie-enabled-debug",
+            "configurePreset": "macOS-MacPorts-pie-enabled-debug",
+            "displayName": "macOS (MacPorts), PIE Enabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macOS-MacPorts-pie-enabled-release",
+            "configurePreset": "macOS-MacPorts-pie-enabled-release",
+            "displayName": "macOS (MacPorts), PIE Enabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macOS-MacPorts-pie-enabled-RelWithDebInfo",
+            "configurePreset": "macOS-MacPorts-pie-enabled-RelWithDebInfo",
+            "displayName": "macOS (MacPorts), PIE Enabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macOS-MacPorts-pie-disabled-debug",
+            "configurePreset": "macOS-MacPorts-pie-disabled-debug",
+            "displayName": "macOS (MacPorts), PIE Disabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macOS-MacPorts-pie-disabled-release",
+            "configurePreset": "macOS-MacPorts-pie-disabled-release",
+            "displayName": "macOS (MacPorts), PIE Disabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-macOS-MacPorts-pie-disabled-RelWithDebInfo",
+            "configurePreset": "macOS-MacPorts-pie-disabled-RelWithDebInfo",
+            "displayName": "macOS (MacPorts), PIE Disabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "package-windows-ninja-pie-enabled-debug",
+            "configurePreset": "windows-ninja-pie-enabled-debug",
+            "displayName": "Windows, Ninja, PIE Enabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-windows-ninja-pie-enabled-release",
+            "configurePreset": "windows-ninja-pie-enabled-release",
+            "displayName": "Windows, Ninja, PIE Enabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-windows-ninja-pie-enabled-RelWithDebInfo",
+            "configurePreset": "windows-ninja-pie-enabled-RelWithDebInfo",
+            "displayName": "Windows, Ninja, PIE Enabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-windows-ninja-pie-disabled-debug",
+            "configurePreset": "windows-ninja-pie-disabled-debug",
+            "displayName": "Windows, Ninja, PIE Disabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-windows-ninja-pie-disabled-release",
+            "configurePreset": "windows-ninja-pie-disabled-release",
+            "displayName": "Windows, Ninja, PIE Disabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-windows-ninja-pie-disabled-RelWithDebInfo",
+            "configurePreset": "windows-ninja-pie-disabled-RelWithDebInfo",
+            "displayName": "Windows, Ninja, PIE Disabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2019Win64-pie-enabled-debug",
+            "configurePreset": "VS2019Win64-pie-enabled-debug",
+            "displayName": "VS2019Win64, PIE Enabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2019Win64-pie-enabled-release",
+            "configurePreset": "VS2019Win64-pie-enabled-release",
+            "displayName": "VS2019Win64, PIE Enabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2019Win64-pie-enabled-RelWithDebInfo",
+            "configurePreset": "VS2019Win64-pie-enabled-RelWithDebInfo",
+            "displayName": "VS2019Win64, PIE Enabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2019Win64-pie-disabled-debug",
+            "configurePreset": "VS2019Win64-pie-disabled-debug",
+            "displayName": "VS2019Win64, PIE Disabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2019Win64-pie-disabled-release",
+            "configurePreset": "VS2019Win64-pie-disabled-release",
+            "displayName": "VS2019Win64, PIE Disabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2019Win64-pie-disabled-RelWithDebInfo",
+            "configurePreset": "VS2019Win64-pie-disabled-RelWithDebInfo",
+            "displayName": "VS2019Win64, PIE Disabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2022Win64-pie-enabled-debug",
+            "configurePreset": "VS2022Win64-pie-enabled-debug",
+            "displayName": "VS2022Win64, PIE Enabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2022Win64-pie-enabled-release",
+            "configurePreset": "VS2022Win64-pie-enabled-release",
+            "displayName": "VS2022Win64, PIE Enabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2022Win64-pie-enabled-RelWithDebInfo",
+            "configurePreset": "VS2022Win64-pie-enabled-RelWithDebInfo",
+            "displayName": "VS2022Win64, PIE Enabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2022Win64-pie-disabled-debug",
+            "configurePreset": "VS2022Win64-pie-disabled-debug",
+            "displayName": "VS2022Win64, PIE Disabled, Debug",
+            "configurations": [
+                "Debug"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2022Win64-pie-disabled-release",
+            "configurePreset": "VS2022Win64-pie-disabled-release",
+            "displayName": "VS2022Win64, PIE Disabled, Release",
+            "configurations": [
+                "Release"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "package-VS2022Win64-pie-disabled-RelWithDebInfo",
+            "configurePreset": "VS2022Win64-pie-disabled-RelWithDebInfo",
+            "displayName": "VS2022Win64, PIE Disabled, RelWithDebInfo",
+            "configurations": [
+                "RelWithDebInfo"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
         }
     ]
+
 }
