@@ -30,6 +30,8 @@ IF (POLICY CMP0167)
     CMAKE_POLICY (SET CMP0167 OLD)
 ENDIF (POLICY CMP0167)
 
+SET(CPACK_BUILD_CONFIG ${CMAKE_BUILD_TYPE})
+
 project(boost_log_python_poc
         LANGUAGES CXX
         VERSION 0.1.4)
@@ -116,8 +118,6 @@ IF (CMAKE_SYSTEM_NAME STREQUAL Windows)
     MESSAGE(STATUS "Configuring Packaging for Windows")
     # NSIS - See https://cmake.org/cmake/help/v3.3/module/CPackNSIS.html
     # NSI bug requires at least 1 set of 4 forwards slashes??
-    SET(CPACK_PACKAGE_ICON "boost_log_python_poc.exe")
-    SET(CPACK_NSIS_INSTALLED_ICON_NAME "boost_log_python_poc.exe")
     SET(CPACK_NSIS_DISPLAY_NAME "Boost_Log_Python_POC")
     SET(CPACK_NSIS_HELP_LINK "https:\\\\stephengtuggy.com")
     SET(CPACK_NSIS_URL_INFO_ABOUT "https:\\\\stephengtuggy.com")
@@ -128,7 +128,7 @@ IF (CMAKE_SYSTEM_NAME STREQUAL Windows)
     SET(CPACK_GENERATOR "NSIS")
     SET(CPACK_PACKAGE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/packages")
     SET(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}_Windows_${CMAKE_SYSTEM_VERSION}_${CMAKE_SYSTEM_PROCESSOR}")
-    SET(CPACK_PACKAGE_EXECUTABLES "boost_log_python_poc.exe" "boost_log_python_poc.exe")
+    SET(CPACK_PACKAGE_EXECUTABLES "${CMAKE_CURRENT_BINARY_DIR}/${CPACK_BUILD_CONFIG}/boost_log_python_poc.exe" "${CMAKE_CURRENT_BINARY_DIR}/${CPACK_BUILD_CONFIG}/boost_log_python_poc.exe")
 ELSE ()
     MESSAGE(WARNING "Packaging boost_log_python_poc is not supported on this platform at this time")
 ENDIF ()
