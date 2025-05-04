@@ -25,7 +25,5 @@ param(
     [String]$BuildType = "RelWithDebInfo" # You can also specify "Debug" or "Release"
 )
 
-[String]$baseDir = (Get-Location -PSProvider "FileSystem").Path
-[String]$binaryDir = "$baseDir\build\$PresetName\$BuildType"
 cmake --preset "$PresetName"
 cmake --build --preset "build-$PresetName" -v
