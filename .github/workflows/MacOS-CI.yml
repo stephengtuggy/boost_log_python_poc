@@ -33,4 +33,4 @@ jobs:
 
       - name: run-build-script
         working-directory: ${{ github.workspace }}
-        run: .\script\build.ps1 -PresetName ${{ matrix.preset-name }} -BuildType ${{ matrix.build-type }}
+        run: ./script/build.ps1 -PresetName ${{ matrix.preset-name }} -BuildType ${{ matrix.build-type }}
