@@ -8,6 +8,10 @@ jobs:
   build_and_test:
     runs-on: ${{ matrix.os }}
 
+    defaults:
+      run:
+        shell: pwsh
+
     strategy:
       fail-fast: false
       matrix:
@@ -46,4 +50,4 @@ jobs:
           pythonLocation: ${{ matrix.vega-py-setup.outputs.python-path }}
           PYTHONHOME: ""
           PYTHONPATH: ""
-        run: pwsh ./script/build.ps1 -PresetName ${{ matrix.preset-name }} -BuildType ${{ matrix.build-type }}
+        run: ./script/build.ps1 -PresetName ${{ matrix.preset-name }} -BuildType ${{ matrix.build-type }}
