@@ -6,6 +6,8 @@
   "addLabels": [
     "dependencies"
   ],
+  "assigneesFromCodeOwners": true,
+  "reviewersFromCodeOwners": true,
   "minimumReleaseAge": "1d",
   "prConcurrentLimit": 3
 }
