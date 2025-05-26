@@ -53,7 +53,7 @@ jobs:
         id: vega-py-setup
         with:
           python-version: ${{ matrix.python-version }}
-          update-environment: false # true
+          update-environment: false
 
       - name: Install dependencies using homebrew
         run: brew install boost-python3
