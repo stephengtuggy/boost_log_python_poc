@@ -67,9 +67,9 @@ jobs:
         working-directory: ${{ github.workspace }}
         env:
           MY_OS_NAME: macos
-          Python3_ROOT_DIR: ${{ matrix.vega-py-setup.outputs.python-path }}
-          Python_ROOT_DIR: ${{ matrix.vega-py-setup.outputs.python-path }}
-          pythonLocation: ${{ matrix.vega-py-setup.outputs.python-path }}
+          Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
+          Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
+          pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
           PYTHONHOME: ""
           PYTHONPATH: ""
         run: ./script/build.ps1 -PresetName ${{ matrix.preset-name }} -BuildType ${{ matrix.build-type }}
