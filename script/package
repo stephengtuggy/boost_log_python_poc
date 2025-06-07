@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The MIT License (MIT)
 #
-# Copyright © 2023-2025 Stephen G. Tuggy
+# Copyright © 2025 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -22,9 +22,10 @@
 # THE SOFTWARE.
 
 set -e
-echo "----------------------------"
-echo "--- cibuild | 2025-06-07 ---"
-echo "----------------------------"
+
+echo "--------------------------"
+echo "--- package | 2025-06-07 ---"
+echo "--------------------------"
 
 #----------------------------------
 # validate parameters
@@ -47,25 +48,4 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-if [ "$COMPILER" == "gcc" ]
-then
-    export CC=gcc
-    export CXX=g++
-elif [ "$COMPILER" == "clang" ]
-then
-    export CC=clang
-    export CXX=clang++
-fi
-
-if [ "$MY_OS_NAME" == "linux" ]
-then
-    SRC_DOCKER_IMG_NAME="vegastrike/vega-strike-build-env:$(echo $FROM | sed 's/:/_/' | sed 's/\//_/')"
-    DOCKER_CONTAINER_NAME="building-vega-strike_$(echo $FROM | sed 's/:/_/' | sed 's/\//_/')"
-    PRESET_NAME="${preset_name}"
-    echo "Running docker image for $FROM / $COMPILER"
-    docker run --env CC="$CC" --env CXX="$CXX" --env IS_RELEASE="$IS_RELEASE" --env TAG_NAME="$TAG_NAME" --env GITHUB_SHA="$GITHUB_SHA" --env SHORT_SHA="$SHORT_SHA" --env PRESET_NAME="$PRESET_NAME" --name "$DOCKER_CONTAINER_NAME" "$SRC_DOCKER_IMG_NAME"
-else
-    script/docker-entrypoint.sh --preset_name="${preset_name}"
-fi
-
-echo "cibuild Done!"
+cpack -V --preset "package-${preset_name}"

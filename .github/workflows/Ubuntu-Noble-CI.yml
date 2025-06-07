@@ -42,10 +42,8 @@ jobs:
                 COMPILER:
                     - 'gcc'
                     - 'clang'
-                OpenGL_GL_PREFERENCE:
-                    - 'GLVND'
-                ENABLE_PIE:
-                    - 'ON'
+                preset-name:
+                    - 'linux-ninja-pie-enabled-RelWithDebInfo'
         steps:
             - name: Check out repository
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -53,8 +51,10 @@ jobs:
                   fetch-depth: 2
                   submodules: false
 
+            - name: Bootstrap
+              run: sudo script/bootstrap
+
             - name: Build and Test
               env:
                   COMPILER: ${{ matrix.COMPILER }}
-                  FLAGS:    '-DOpenGL_GL_PREFERENCE=${{ matrix.OpenGL_GL_PREFERENCE }} -DENABLE_PIE=${{ matrix.ENABLE_PIE }}'
-              run: script/docker-entrypoint.sh $FLAGS
+              run: script/docker-entrypoint.sh --preset_name=${{ matrix.preset-name }}

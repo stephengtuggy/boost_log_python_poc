@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The MIT License (MIT)
 #
-# Copyright © 2023-2025 Stephen G. Tuggy
+# Copyright © 2025 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -23,7 +23,30 @@
 
 set -e
 
-echo "docker-entrypoint.sh: Flags passed in: $FLAGS"
+echo "-----------------------------------------"
+echo "--- docker-entrypoint.sh | 2025-06-07 ---"
+echo "-----------------------------------------"
+
+#----------------------------------
+# validate parameters
+#----------------------------------
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --preset_name=*)
+      preset_name="${1#*=}"
+      ;;
+    --build_type=*)
+      build_type="${1#*=}"
+      ;;
+    *)
+      printf "***************************\n"
+      printf "* Error: Invalid argument.*\n"
+      printf "***************************\n"
+      exit 1
+  esac
+  shift
+done
 
 if [ "$COMPILER" == "gcc" ]
 then
@@ -35,12 +58,8 @@ then
     export CXX=clang++
 fi
 
-echo "Re-run bootstrap"
-sudo script/bootstrap
-
-if [ "$CC" == "clang" ]
-then
-    script/build -DCMAKE_BUILD_TYPE=RelWithDebInfo $FLAGS
-else
-    script/build -DCMAKE_BUILD_TYPE=Debug $FLAGS
+if [ -z "$preset_name" ] && [ -n "$PRESET_NAME" ]; then
+    preset_name="${PRESET_NAME}"
 fi
+
+script/build --preset_name="${preset_name}"
