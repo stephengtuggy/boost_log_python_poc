@@ -22,6 +22,30 @@
 # THE SOFTWARE.
 
 set -e
+echo "----------------------------"
+echo "--- cibuild | 2025-06-07 ---"
+echo "----------------------------"
+
+#----------------------------------
+# validate parameters
+#----------------------------------
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --preset_name=*)
+      preset_name="${1#*=}"
+      ;;
+    --build_type=*)
+      build_type="${1#*=}"
+      ;;
+    *)
+      printf "***************************\n"
+      printf "* Error: Invalid argument.*\n"
+      printf "***************************\n"
+      exit 1
+  esac
+  shift
+done
 
 if [ "$COMPILER" == "gcc" ]
 then
@@ -37,10 +61,11 @@ if [ "$MY_OS_NAME" == "linux" ]
 then
     SRC_DOCKER_IMG_NAME="vegastrike/vega-strike-build-env:$(echo $FROM | sed 's/:/_/' | sed 's/\//_/')"
     DOCKER_CONTAINER_NAME="building-vega-strike_$(echo $FROM | sed 's/:/_/' | sed 's/\//_/')"
+    PRESET_NAME="${preset_name}"
     echo "Running docker image for $FROM / $COMPILER"
-    docker run --env CC="$CC" --env CXX="$CXX" --env IS_RELEASE="$IS_RELEASE" --env TAG_NAME="$TAG_NAME" --env GITHUB_SHA="$GITHUB_SHA" --env SHORT_SHA="$SHORT_SHA" --env FLAGS="$FLAGS" --name "$DOCKER_CONTAINER_NAME" "$SRC_DOCKER_IMG_NAME"
+    docker run --env CC="$CC" --env CXX="$CXX" --env IS_RELEASE="$IS_RELEASE" --env TAG_NAME="$TAG_NAME" --env GITHUB_SHA="$GITHUB_SHA" --env SHORT_SHA="$SHORT_SHA" --env PRESET_NAME="$PRESET_NAME" --name "$DOCKER_CONTAINER_NAME" "$SRC_DOCKER_IMG_NAME"
 else
-    script/docker-entrypoint.sh
+    script/docker-entrypoint.sh --preset_name "${preset_name}"
 fi
 
 echo "cibuild Done!"
