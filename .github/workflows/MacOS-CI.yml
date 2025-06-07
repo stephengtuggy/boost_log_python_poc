@@ -32,7 +32,7 @@ jobs:
 
     defaults:
       run:
-        shell: pwsh
+        shell: bash
 
     strategy:
       fail-fast: false
@@ -76,4 +76,4 @@ jobs:
           pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
           PYTHONHOME: ""
           PYTHONPATH: ""
-        run: ./script/build.ps1 -PresetName ${{ matrix.preset-name }} -BuildType ${{ matrix.build-type }}
+        run: ./script/build --preset_name ${{ matrix.preset-name }}

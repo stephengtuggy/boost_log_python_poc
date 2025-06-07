@@ -55,10 +55,8 @@ jobs:
         COMPILER:
           - 'gcc'
           - 'clang'
-        OpenGL_GL_PREFERENCE:
-          - 'GLVND'
-        ENABLE_PIE:
-          - 'ON'
+        preset-name:
+          - 'linux-ninja-pie-enabled-RelWithDebInfo'
 
     steps:
       - name: Check out repository
@@ -71,10 +69,9 @@ jobs:
         env:
           FROM:       ${{ matrix.FROM }}
           COMPILER:   ${{ matrix.COMPILER }}
-          FLAGS:      '-DOpenGL_GL_PREFERENCE=${{ matrix.OpenGL_GL_PREFERENCE }} -DENABLE_PIE=${{ matrix.ENABLE_PIE }}'
           MY_OS_NAME: linux
           IS_RELEASE: 0
-        run: script/cibuild $FLAGS
+        run: script/cibuild --preset_name ${{ matrix.preset-name }}
 
       - name: Upload test results
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
