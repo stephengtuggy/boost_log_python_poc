@@ -76,4 +76,4 @@ jobs:
           pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
           PYTHONHOME: ""
           PYTHONPATH: ""
-        run: ./script/build --preset_name ${{ matrix.preset-name }}
+        run: ./script/build --preset_name=${{ matrix.preset-name }}

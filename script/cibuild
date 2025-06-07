@@ -65,7 +65,7 @@ then
     echo "Running docker image for $FROM / $COMPILER"
     docker run --env CC="$CC" --env CXX="$CXX" --env IS_RELEASE="$IS_RELEASE" --env TAG_NAME="$TAG_NAME" --env GITHUB_SHA="$GITHUB_SHA" --env SHORT_SHA="$SHORT_SHA" --env PRESET_NAME="$PRESET_NAME" --name "$DOCKER_CONTAINER_NAME" "$SRC_DOCKER_IMG_NAME"
 else
-    script/docker-entrypoint.sh --preset_name "${preset_name}"
+    script/docker-entrypoint.sh --preset_name="${preset_name}"
 fi
 
 echo "cibuild Done!"

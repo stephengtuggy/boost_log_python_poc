@@ -62,4 +62,4 @@ if [ -z "$preset_name" ] && [ -n "$PRESET_NAME" ]; then
     preset_name="${PRESET_NAME}"
 fi
 
-script/build --preset_name "${preset_name}"
+script/build --preset_name="${preset_name}"
