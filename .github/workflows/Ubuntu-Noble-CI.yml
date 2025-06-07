@@ -51,6 +51,9 @@ jobs:
                   fetch-depth: 2
                   submodules: false
 
+            - name: Bootstrap
+              run: sudo script/bootstrap
+
             - name: Build and Test
               env:
                   COMPILER: ${{ matrix.COMPILER }}
