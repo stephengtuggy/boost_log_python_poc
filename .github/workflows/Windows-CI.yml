@@ -49,20 +49,9 @@ jobs:
             python-version: 3.12.10
 
     env:
-      # Indicates the location of vcpkg
-      VCPKG_ROOT: '${{ github.workspace }}/v'
-      # Tells vcpkg where binary packages are stored.
-      VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}/vbincache'
-      # Let's use GitHub Action cache as storage for the vcpkg Binary Caching feature.
-      VCPKG_BINARY_SOURCES: 'clear;x-gha,readwrite'
       VCPKG_DEFAULT_TRIPLET: x64-windows-win10
-      VCPKG_DEFAULT_HOST_TRIPLET: x64-windows-win10
+
     steps:
-      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7.0.1
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
       - name: checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
@@ -72,10 +61,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           update-environment: false
-
-      - name: "Create directory '${{ env.VCPKG_DEFAULT_BINARY_CACHE }}'"
-        run: mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
-        shell: bash
 
       - name: install-cmake
         uses: lukka/get-cmake@ea004816823209b8d1211e47b216185caee12cc5 # v4.0.2
@@ -94,6 +79,12 @@ jobs:
 
       - name: run-cmake
         uses: lukka/run-cmake@af1be47fd7c933593f687731bc6fdbee024d3ff4 # v10.8
+        env:
+          Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
+          Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
+          pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
+          PYTHONHOME: ""
+          PYTHONPATH: ""
         with:
           configurePreset: ${{ matrix.preset-name }}
           buildPreset: "build-${{ matrix.preset-name }}"
