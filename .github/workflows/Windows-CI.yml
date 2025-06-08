@@ -100,6 +100,8 @@ jobs:
           path: |
             ${{ env.VCPKG_ROOT }}
             !${{ env.VCPKG_ROOT }}/buildtrees
+            ${{ env.VCPKG_DEFAULT_BINARY_CACHE }}
+            !${{ env.VCPKG_DEFAULT_BINARY_CACHE }}/buildtrees
           # The key is composed in a way that it gets properly invalidated whenever a different version of vcpkg is being used.
           key: |
             ${{ matrix.os }}-${{ hashFiles( './vcpkg.json' )}}
