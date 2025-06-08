@@ -54,7 +54,7 @@ jobs:
       # Tells vcpkg where binary packages are stored.
       VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}/vbincache'
       # Let's use GitHub Action cache as storage for the vcpkg Binary Caching feature.
-      VCPKG_BINARY_SOURCES: 'x-gha,readwrite'
+      VCPKG_BINARY_SOURCES: 'clear;x-gha,readwrite'
       VCPKG_DEFAULT_TRIPLET: x64-windows-win10
       VCPKG_DEFAULT_HOST_TRIPLET: x64-windows-win10
 
