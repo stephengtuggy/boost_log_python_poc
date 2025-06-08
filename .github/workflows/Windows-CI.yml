@@ -82,14 +82,19 @@ jobs:
         with:
           cmakeVersion: 4.0.2
           ninjaVersion: 1.12.1
-      - uses: lukka/run-vcpkg@5e0cab206a5ea620130caf672fce3e4a6b5666a1 # v11.5
-        with:
-          configurePreset: ${{ matrix.preset-name }}
-          buildPreset: "build-${{ matrix.preset-name }}"
-          testPreset: "test-${{ matrix.preset-name }}"
+
+      - name: run-vcpkg
+        uses: lukka/run-vcpkg@5e0cab206a5ea620130caf672fce3e4a6b5666a1 # v11.5
         env:
           Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
           PYTHONHOME: ""
           PYTHONPATH: ""
+
+      - name: run-cmake
+        uses: lukka/run-cmake@af1be47fd7c933593f687731bc6fdbee024d3ff4 # v10.8
+        with:
+          configurePreset: ${{ matrix.preset-name }}
+          buildPreset: "build-${{ matrix.preset-name }}"
+          testPreset: "test-${{ matrix.preset-name }}"
