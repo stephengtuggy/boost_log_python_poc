@@ -23,9 +23,9 @@
 
 set -e
 
-echo "--------------------------"
-echo "--- package | 2025-06-07 ---"
-echo "--------------------------"
+echo "----------------------------"
+echo "--- package | 2025-06-27 ---"
+echo "----------------------------"
 
 #----------------------------------
 # validate parameters
@@ -36,7 +36,13 @@ while [ $# -gt 0 ]; do
     --preset_name=*)
       preset_name="${1#*=}"
       ;;
+    --preset-name=*)
+      preset_name="${1#*=}"
+      ;;
     --build_type=*)
+      build_type="${1#*=}"
+      ;;
+    --build-type=*)
       build_type="${1#*=}"
       ;;
     *)
