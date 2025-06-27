@@ -23,7 +23,7 @@
 
 set -e
 echo "----------------------------"
-echo "--- cibuild | 2025-06-07 ---"
+echo "--- cibuild | 2025-06-27 ---"
 echo "----------------------------"
 
 #----------------------------------
@@ -35,7 +35,13 @@ while [ $# -gt 0 ]; do
     --preset_name=*)
       preset_name="${1#*=}"
       ;;
+    --preset-name=*)
+      preset_name="${1#*=}"
+      ;;
     --build_type=*)
+      build_type="${1#*=}"
+      ;;
+    --build-type=*)
       build_type="${1#*=}"
       ;;
     *)
