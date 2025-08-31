@@ -203,7 +203,7 @@ function bootstrapOnUbuntu()
                       libboost-python-dev \
                       libboost-log-dev \
                       libboost-regex-dev \
-                      libbost-json-dev \
+                      libboost-json-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
