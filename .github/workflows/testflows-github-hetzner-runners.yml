@@ -26,4 +26,4 @@ jobs:
       - name: Build and test
         env:
           COMPILER: ${{ matrix.COMPILER }}
-        run: script/docker-entrypoint.sh --preset_name=${{ matrix.preet_name }}
+        run: script/build --preset_name=${{ matrix.preet_name }}
