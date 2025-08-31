@@ -1,0 +1,54 @@
+name: Docker-TestFlows-GitHub-Hetzner-Runners
+run-name: ${{ github.actor }} triggered a GitHub Actions workflow that will run on Docker-TestFlows-GitHub-Hetzner-Runners
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  Build-and-Test-on-TestFlows-GitHub-Hetzner-Runners:
+    runs-on: [self-hosted, type-cx22, image-x86-app-docker-ce]
+    strategy:
+      fail-fast: false
+      matrix:
+        FROM:
+          - 'ubuntu:noble'
+          - 'ubuntu:jammy'
+          - 'linuxmintd/mint22-amd64'
+          - 'debian:trixie'
+          - 'debian:bookworm'
+          - 'opensuse/leap:16.0'
+          - 'opensuse/leap:15.6'
+          - 'fedora:42'
+          - 'fedora:41'
+          - 'fedora:40'
+          - 'rockylinux_rockylinux:9.5'
+          - 'manjarolinux/base'
+        COMPILER:
+          - 'gcc'
+          - 'clang'
+        preset-name:
+          - 'linux-ninja-pie-enabled-RelWithDebInfo'
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 2
+          submodules: false
+
+      - name: Bootstrap
+        run: sudo script/bootstrap
+
+      - name: Build and test
+        env:
+          FROM:       ${{ matrix.FROM }}
+          COMPILER:   ${{ matrix.COMPILER }}
+          MY_OS_NAME: linux
+          IS_RELEASE: 0
+        run: script/cibuild --preset_name=${{ matrix.preset-name }}
+
+      - name: Upload test results
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: failure()
+        with:
+          name: test_results_xml
+          path: ${{github.workspace}}/test-results/**/*.xml
