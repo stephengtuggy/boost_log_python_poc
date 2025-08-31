@@ -83,7 +83,8 @@ function bootstrapOnDebian()
                   libboost-program-options-dev \
                   libxmu-dev \
                   clang \
-                  lsb-release
+                  lsb-release \
+                  ninja-build
       ;;
     "bookworm")
       apt-get -qy remove \
@@ -119,7 +120,8 @@ function bootstrapOnDebian()
                       libboost-program-options1.81-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     "bullseye"|"buster"|"stretch")
         echo "Sorry, Debian ${LINUX_CODENAME} is no longer supported"
@@ -172,7 +174,8 @@ function bootstrapOnUbuntu()
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     "jammy")
       apt-get -qy install \
@@ -204,7 +207,8 @@ function bootstrapOnUbuntu()
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     "hirsute"|"impish"|"focal"|"bionic"|"xenial")
         echo "Sorry, Ubuntu ${LINUX_CODENAME} is no longer supported"
@@ -257,7 +261,8 @@ function bootstrapOnPopOS ()
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     "noble")
       apt-get -qy install \
@@ -289,7 +294,8 @@ function bootstrapOnPopOS ()
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     *)
       echo "Sorry, this version of Pop! OS is not currently supported"
@@ -338,7 +344,8 @@ function bootstrapOnLinuxMint ()
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     "virginia")
       apt-get -qy install \
@@ -370,7 +377,8 @@ function bootstrapOnLinuxMint ()
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     "victoria")
       apt-get -qy install \
@@ -402,7 +410,8 @@ function bootstrapOnLinuxMint ()
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     "vera")
       apt-get -qy install \
@@ -434,7 +443,8 @@ function bootstrapOnLinuxMint ()
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     "vanessa")
       apt-get -qy install \
@@ -466,7 +476,8 @@ function bootstrapOnLinuxMint ()
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     "ulyana")
       apt-get -qy install \
@@ -496,7 +507,8 @@ function bootstrapOnLinuxMint ()
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
-                      lsb-release
+                      lsb-release \
+                      ninja-build
       ;;
     *)
       echo "This version of Linux Mint is not directly supported. You may be able to use the corresponding Ubuntu installation package"
@@ -538,7 +550,8 @@ function bootstrapOnOpenSuseLeap ()
                               python3-devel \
                               git \
                               rpm-build \
-                              clang
+                              clang \
+                              ninja
       ;;
     "15.5")
       zypper --non-interactive install -y \
@@ -571,7 +584,8 @@ function bootstrapOnOpenSuseLeap ()
                               python3-devel \
                               git \
                               rpm-build \
-                              clang
+                              clang \
+                              ninja
       ;;
     "15.6")
       zypper --non-interactive install -y \
@@ -604,7 +618,8 @@ function bootstrapOnOpenSuseLeap ()
                               python3-devel \
                               git \
                               rpm-build \
-                              clang
+                              clang \
+                              ninja
       ;;
     "16.0")
       zypper --non-interactive install -y \
@@ -637,7 +652,8 @@ function bootstrapOnOpenSuseLeap ()
                               python3-devel \
                               git \
                               rpm-build \
-                              clang
+                              clang \
+                              ninja
       ;;
     *)
       echo "Sorry, this version of openSUSE Leap is unsupported"
@@ -667,7 +683,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     31)
       dnf install -y \
@@ -687,7 +704,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     32)
       dnf install -y \
@@ -707,7 +725,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     33)
       dnf install -y \
@@ -727,7 +746,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     34)
       dnf install -y \
@@ -747,7 +767,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     35)
       dnf install -y \
@@ -767,7 +788,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     36)
       dnf install -y \
@@ -787,7 +809,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     37)
       dnf install -y \
@@ -807,7 +830,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     38)
       dnf install -y \
@@ -827,7 +851,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     39)
       dnf install -y \
@@ -847,7 +872,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     40)
       dnf install -y \
@@ -867,7 +893,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     41)
       dnf install -y \
@@ -887,7 +914,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     42)
       dnf install -y \
@@ -907,7 +935,8 @@ function bootstrapOnFedora ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     *)
       echo "Sorry, this version of Fedora is unsupported"
@@ -940,7 +969,8 @@ function bootstrapOnCentOS ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     "8.0")
       dnf -y install dnf-plugins-core
@@ -963,7 +993,8 @@ function bootstrapOnCentOS ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     *)
       echo "Sorry, this version of CentOS is unsupported"
@@ -997,7 +1028,8 @@ function bootstrapOnRedHat ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     *)
       echo "Sorry, this version of Red Hat is unsupported"
@@ -1032,7 +1064,8 @@ function bootstrapOnRockyLinux ()
                           python3-devel \
                           rpm-build \
                           make \
-                          clang
+                          clang \
+                          ninja
       ;;
     *)
       echo "Sorry, this version of Rocky Linux is unsupported"
