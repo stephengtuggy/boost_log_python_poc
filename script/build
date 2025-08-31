@@ -63,4 +63,5 @@ then
     num_threads_to_build_with=${MAX_THREADS_TO_BUILD_WITH}
 fi
 
-VERBOSE=1 cmake --build --preset "build-${preset_name}" -j ${num_threads_to_build_with}
+echo "Preset name is $preset_name"
+VERBOSE=1 cmake --build --preset "build-$preset_name" -j ${num_threads_to_build_with}
