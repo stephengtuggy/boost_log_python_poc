@@ -80,7 +80,6 @@ function bootstrapOnDebian()
                   libboost-python-dev \
                   libboost-log-dev \
                   libboost-regex-dev \
-                  libboost-json-dev \
                   libboost-program-options-dev \
                   libxmu-dev \
                   clang \
@@ -170,7 +169,6 @@ function bootstrapOnUbuntu()
                       libboost-python-dev \
                       libboost-log-dev \
                       libboost-regex-dev \
-                      libboost-json-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
@@ -203,7 +201,6 @@ function bootstrapOnUbuntu()
                       libboost-python-dev \
                       libboost-log-dev \
                       libboost-regex-dev \
-                      libboost-json-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
@@ -257,7 +254,6 @@ function bootstrapOnPopOS ()
                       libboost-python-dev \
                       libboost-log-dev \
                       libboost-regex-dev \
-                      libboost-json-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
@@ -290,7 +286,6 @@ function bootstrapOnPopOS ()
                       libboost-python-dev \
                       libboost-log-dev \
                       libboost-regex-dev \
-                      libboost-json-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
@@ -340,7 +335,6 @@ function bootstrapOnLinuxMint ()
                       libboost-python-dev \
                       libboost-log-dev \
                       libboost-regex-dev \
-                      libboost-json-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
@@ -373,7 +367,6 @@ function bootstrapOnLinuxMint ()
                       libboost-python-dev \
                       libboost-log-dev \
                       libboost-regex-dev \
-                      libboost-json-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
@@ -406,7 +399,6 @@ function bootstrapOnLinuxMint ()
                       libboost-python-dev \
                       libboost-log-dev \
                       libboost-regex-dev \
-                      libboost-json-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
@@ -439,7 +431,6 @@ function bootstrapOnLinuxMint ()
                       libboost-python-dev \
                       libboost-log-dev \
                       libboost-regex-dev \
-                      libboost-json-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
@@ -472,7 +463,6 @@ function bootstrapOnLinuxMint ()
                       libboost-python-dev \
                       libboost-log-dev \
                       libboost-regex-dev \
-                      libboost-json-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
                       clang \
@@ -502,7 +492,6 @@ function bootstrapOnLinuxMint ()
                       freeglut3-dev \
                       libboost-python-dev \
                       libboost-log-dev \
-                      libboost-json-dev \
                       libboost-regex-dev \
                       libboost-program-options-dev \
                       libxmu-dev \
