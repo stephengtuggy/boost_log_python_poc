@@ -13,7 +13,7 @@ jobs:
         COMPILER:
           - 'gcc'
           - 'clang'
-        preset-name:
+        preset_name:
           - 'linux-ninja-pie-enabled-RelWithDebInfo'
     steps:
       - name: Check out repository code
