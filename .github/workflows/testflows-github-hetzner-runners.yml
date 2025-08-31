@@ -1,0 +1,29 @@
+name: TestFlows-GitHub-Hetzner-Runners
+run-name: ${{ github.actor }} triggered a GitHub Actions workflow that will run on TestFlows-GitHub-Hetzner-Runners
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  Build-and-Test-on-TestFlows-GitHub-Hetzner-Runners:
+    runs-on: [self-hosted, type-cpx21]
+    strategy:
+      fail-fast: false
+      matrix:
+        COMPILER:
+          - 'gcc'
+          - 'clang'
+        preset_name:
+          - 'linux-ninja-pie-enabled-RelWithDebInfo'
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 2
+          submodules: false
+      - name: Bootstrap
+        run: sudo script/bootstrap
+      - name: Build and test
+        env:
+          COMPILER: ${{ matrix.COMPILER }}
+        run: script/build --preset_name=${{ matrix.preset_name }}
