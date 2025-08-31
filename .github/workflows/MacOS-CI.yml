@@ -66,9 +66,6 @@ jobs:
 
       - name: install-cmake
         uses: lukka/get-cmake@2ecc21724e5215b0e567bc399a2602d2ecb48541 # v4.1.1
-        with:
-          cmakeVersion: 4.1.0
-          ninjaVersion: 1.12.1
 
       - name: run-build-script
         working-directory: ${{ github.workspace }}
