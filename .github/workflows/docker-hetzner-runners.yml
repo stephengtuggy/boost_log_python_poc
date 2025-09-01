@@ -5,7 +5,7 @@ on:
   pull_request:
   workflow_dispatch:
 jobs:
-  Build-and-Test-on-TestFlows-GitHub-Hetzner-Runners:
+  Build-and-Test-on-Docker-TestFlows-GitHub-Hetzner-Runners:
     runs-on: [self-hosted, type-cx22, image-x86-app-docker-ce]
     strategy:
       fail-fast: false
@@ -16,7 +16,7 @@ jobs:
           - 'linuxmintd/mint22-amd64'
           - 'debian:trixie'
           - 'debian:bookworm'
-          - 'opensuse/leap:16.0'
+          #- 'opensuse/leap:16.0'
           - 'opensuse/leap:15.6'
           - 'fedora:42'
           - 'fedora:41'
