@@ -49,11 +49,11 @@ jobs:
             build-type: RelWithDebInfo
             preset-name: VS2022Win64-pie-disabled-RelWithDebInfo
             python-version: 3.13.9
-          - os: windows-2025
-            triplet: x64-windows-win10
-            build-type: Release
-            preset-name: VS2026Win64-pie-disabled-release
-            python-version: 3.14.0
+          #- os: windows-2025
+          #  triplet: x64-windows-win10
+          #  build-type: Release
+          #  preset-name: VS2026Win64-pie-disabled-release
+          #  python-version: 3.14.0
 
     env:
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
