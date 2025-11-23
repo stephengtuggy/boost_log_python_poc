@@ -21,6 +21,9 @@
 # THE SOFTWARE.
 
 name: MacOS-CI
+permissions:
+  contents: read
+  pull-requests: read
 on:
   push:
   pull_request:
