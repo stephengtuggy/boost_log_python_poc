@@ -386,6 +386,7 @@
             "inherits": "windows-base",
             "displayName": "Visual Studio 2019 on Windows x64",
             "generator": "Visual Studio 16 2019",
+            "architecture": "X64",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -398,6 +399,7 @@
             "inherits": "windows-base",
             "displayName": "Visual Studio 2022 on Windows x64",
             "generator": "Visual Studio 17 2022",
+            "architecture": "X64",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
@@ -410,6 +412,7 @@
             "inherits": "windows-base",
             "displayName": "Visual Studio 2026 on Windows x64",
             "generator": "Visual Studio 18 2026",
+            "architecture": "X64",
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
