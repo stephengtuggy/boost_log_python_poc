@@ -1,8 +1,8 @@
 {
     "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
     "name": "boost-log-python-poc",
-    "version-string": "0.1.4",
-    "builtin-baseline": "ce613c41372b23b1f51333815feb3edd87ef8a8b",
+    "version-string": "0.1.5",
+    "builtin-baseline": "2e776305f2542cc626716435b0c1baf67bb5ab45",
     "dependencies": [
         "boost-python",
         "boost-log"
