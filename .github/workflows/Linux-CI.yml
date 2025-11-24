@@ -21,6 +21,9 @@
 # THE SOFTWARE.
 
 name: Linux-CI
+permissions:
+  contents: read
+  pull-requests: read
 
 # Controls when the action will run.
 on:
@@ -43,17 +46,15 @@ jobs:
       fail-fast: false
       matrix:
         FROM:
+          - 'ubuntu:questing'
           - 'ubuntu:noble'
-          - 'ubuntu:jammy'
+          - 'linuxmintd/mint22.2-amd64'
           - 'linuxmintd/mint22-amd64'
           - 'debian:trixie'
-          - 'debian:bookworm'
           - 'opensuse/leap:16.0'
-          - 'opensuse/leap:15.6'
+          - 'fedora:43'
           - 'fedora:42'
-          - 'fedora:41'
-          - 'fedora:40'
-          - 'rockylinux_rockylinux:9.5'
+          - 'rockylinux_rockylinux:10.0'
           - 'manjarolinux/base'
         COMPILER:
           - 'gcc'

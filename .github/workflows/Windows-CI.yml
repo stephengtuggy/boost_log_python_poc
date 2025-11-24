@@ -21,6 +21,9 @@
 # THE SOFTWARE.
 
 name: Windows-CI
+permissions:
+  contents: read
+  pull-requests: read
 
 # Controls when the action will run.
 on:
@@ -40,17 +43,26 @@ jobs:
       matrix:
         include:
           - os: windows-2022
-            triplet: x64-windows-win10
+            triplet: x64-win10
             build-type: Debug
             preset-name: VS2022Win64-pie-enabled-debug
             python-version: 3.12.10
           - os: windows-2025
-            triplet: x64-windows-win10
+            triplet: x64-win10
             build-type: RelWithDebInfo
             preset-name: VS2022Win64-pie-disabled-RelWithDebInfo
-            python-version: 3.13.4
+            python-version: 3.13.9
+          #- os: windows-2025
+          #  triplet: x64-windows-win10
+          #  build-type: Release
+          #  preset-name: VS2026Win64-pie-disabled-release
+          #  python-version: 3.14.0
 
     env:
+      ## Indicates the location of vcpkg
+      #VCPKG_ROOT: '${{ github.workspace }}/v'
+      # Tells vcpkg where binary packages are stored.
+      VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}/vbincache'
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
       VCPKG_DEFAULT_HOST_TRIPLET: ${{ matrix.triplet }}
       VCPKG_BINARY_SOURCES: clear;files,${{ github.workspace }}/vcpkg_cache,readwrite

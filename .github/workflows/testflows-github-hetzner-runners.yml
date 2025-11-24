@@ -22,6 +22,9 @@
 
 name: TestFlows-GitHub-Hetzner-Runners
 run-name: ${{ github.actor }} triggered a GitHub Actions workflow that will run on TestFlows-GitHub-Hetzner-Runners
+permissions:
+  contents: read
+  pull-requests: read
 on:
   push:
   pull_request:
