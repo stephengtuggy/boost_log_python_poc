@@ -41,10 +41,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macOS-13
-            build-type: Debug
-            preset-name: macos-pie-enabled-debug
-            python-version: 3.12.10
           - os: macOS-14
             build-type: RelWithDebInfo
             preset-name: macos-pie-enabled-RelWithDebInfo
