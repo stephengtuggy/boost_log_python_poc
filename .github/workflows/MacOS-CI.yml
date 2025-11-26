@@ -41,10 +41,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macOS-13
-            build-type: Debug
-            preset-name: macos-pie-enabled-debug
-            python-version: 3.12.10
           - os: macOS-14
             build-type: RelWithDebInfo
             preset-name: macos-pie-enabled-RelWithDebInfo
@@ -56,7 +52,7 @@ jobs:
 
     steps:
       - name: Python Setup on Mac
-        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
         id: vega-py-setup
         with:
           python-version: ${{ matrix.python-version }}
