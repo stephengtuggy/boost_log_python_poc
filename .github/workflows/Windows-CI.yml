@@ -51,21 +51,24 @@ jobs:
             triplet: x64-win10
             build-type: RelWithDebInfo
             preset-name: VS2022Win64-pie-disabled-RelWithDebInfo
-            python-version: 3.13.9
-          #- os: windows-2025
-          #  triplet: x64-windows-win10
-          #  build-type: Release
-          #  preset-name: VS2026Win64-pie-disabled-release
-          #  python-version: 3.14.0
+            python-version: 3.13.12
+          - os: windows-2025-vs2026
+            triplet: x64-win10
+            build-type: Release
+            preset-name: VS2026Win64-pie-enabled-release
+            python-version: 3.14.3
 
     env:
-      ## Indicates the location of vcpkg
-      #VCPKG_ROOT: '${{ github.workspace }}/v'
-      # Tells vcpkg where binary packages are stored.
-      VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}/vbincache'
+      # Indicates the location of vcpkg
+      VCPKG_ROOT: '${{ github.workspace }}/v'
+#      # Tells vcpkg where binary packages are stored.
+#      VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}/vbincache'
+      VCPKG_BINARY_SOURCES: clear;files,${{ github.workspace }}/vcpkg_cache,readwrite
+      VCPKG_OVERLAY_PORTS: ${{ github.workspace }}\\custom-triplets
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
       VCPKG_DEFAULT_HOST_TRIPLET: ${{ matrix.triplet }}
-      VCPKG_BINARY_SOURCES: clear;files,${{ github.workspace }}/vcpkg_cache,readwrite
+      PYTHONHOME: ""
+      PYTHONPATH: ""
 
     steps:
       - name: checkout
@@ -78,36 +81,31 @@ jobs:
         uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
           path: ${{ github.workspace }}/vcpkg_cache
-          key: vcpkg-${{ matrix.os }}-${{ matrix.triplet }}-${{ hashFiles('vcpkg.json') }}
-          restore-keys: vcpkg-${{ matrix.os }}-${{ matrix.triplet }}-
+          key: vcpkg_cache-${{ github.repository_owner }}-${{ matrix.os }}-${{ matrix.triplet }}-${{ hashFiles('vcpkg.json') }}
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         id: vega-py-setup
         with:
           python-version: ${{ matrix.python-version }}
           update-environment: false
 
-      - name: install-cmake
+      - name: Install CMake
         uses: lukka/get-cmake@ea83089aa35e08e459464341fe24ad024ee2466f # v4.3.1
 
-      - name: run-vcpkg
+      - name: Install vcpkg
         uses: lukka/run-vcpkg@08ab0cc59d3f33647c5dc2b1e8f2093266c7b873 # Node 24 compatible version
         env:
           Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
-          PYTHONHOME: ""
-          PYTHONPATH: ""
 
-      - name: run-cmake
+      - name: Build and test the code
         uses: lukka/run-cmake@5d55ea7949e25f69f0ecb516d8d572297e03a956 # v10.9
         env:
           Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
-          PYTHONHOME: ""
-          PYTHONPATH: ""
         with:
           configurePreset: ${{ matrix.preset-name }}
           buildPreset: "build-${{ matrix.preset-name }}"
@@ -117,4 +115,5 @@ jobs:
         uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
           path: ${{ github.workspace }}/vcpkg_cache
-          key: vcpkg-${{ matrix.os }}-${{ matrix.triplet }}-${{ hashFiles('vcpkg.json') }}
+          key: ${{ steps.cache-vcpkg-restore.outputs.cache-primary-key }}
+        if: steps.cache-vcpkg-restore.outputs.cache-hit != 'true'
