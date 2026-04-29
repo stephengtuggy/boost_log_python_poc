@@ -1,0 +1,1192 @@
+#!/usr/bin/env bash
+# The MIT License (MIT)
+#
+# Copyright © 2026 Stephen G. Tuggy
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the “Software”), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+# ====================================
+# @file   : bootstrap-on-linux.sh
+# @brief  : installs dependencies for building boost_log_python_poc on Linux
+# @usage  : sudo script/bootstrap-on-linux.sh 1 (to update all installed
+#           packages on the system in the process)
+#     or  : sudo script/bootstrap-on-linux.sh 0 (to skip updating, and
+#           just install the new packages that are needed)
+# @param  : just one parameter, either a 1 or a 0, to indicate whether or not to
+#           UPDATE_ALL_SYSTEM_PACKAGES
+# ====================================
+
+set -e
+
+echo "------------------------------------------"
+echo "--- bootstrap-on-linux.sh | 2026-04-29 ---"
+echo "------------------------------------------"
+
+UPDATE_ALL_SYSTEM_PACKAGES="$1"
+
+if [ -f /etc/os-release ]
+then
+  OS_RELEASE_LOCATION="/etc/os-release"
+elif [ -f /usr/lib/os-release ]
+then
+  OS_RELEASE_LOCATION="/usr/lib/os-release"
+else
+  echo "os-release file not found; unable to continue"
+  exit 1
+fi
+LINUX_ID=$(grep ^ID= $OS_RELEASE_LOCATION | sed 's/^ID=//' | tr -d '"\n')
+echo "LINUX_ID = ${LINUX_ID}"
+LINUX_CODENAME=$(grep ^VERSION_CODENAME= $OS_RELEASE_LOCATION | sed 's/^VERSION_CODENAME=//' | tr -d '"\n')
+echo "LINUX_CODENAME = ${LINUX_CODENAME}"
+LINUX_VERSION_ID=$(grep ^VERSION_ID= $OS_RELEASE_LOCATION | sed 's/^VERSION_ID=//' | tr -d '"\n')
+echo "LINUX_VERSION_ID = ${LINUX_VERSION_ID}"
+
+function bootstrapOnDebian()
+{
+  apt-get update
+
+  if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
+  then
+    apt-get -qy upgrade
+  fi
+
+  case "$LINUX_CODENAME" in
+    "trixie")
+      apt-get -qy install \
+                  git \
+                  cmake \
+                  python3-dev \
+                  build-essential \
+                  automake \
+                  autoconf \
+                  libpng-dev \
+                  libpng-tools \
+                  libjpeg62-turbo-dev \
+                  libexpat1-dev \
+                  libgtk-3-dev \
+                  libopenal-dev \
+                  libogg-dev \
+                  libvorbis-dev \
+                  libglvnd-dev \
+                  libgl1-mesa-dev \
+                  libsdl2-dev \
+                  libpostproc-dev \
+                  freeglut3-dev \
+                  libboost-python-dev \
+                  libboost-log-dev \
+                  libboost-regex-dev \
+                  libboost-program-options-dev \
+                  libxmu-dev \
+                  clang \
+                  lsb-release \
+                  ninja-build
+      ;;
+    "bookworm")
+      apt-get -qy remove \
+                      libboost-python-dev \
+                      libboost-log-dev \
+                      libboost-regex-dev
+      apt-get -qy autoremove
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      automake \
+                      autoconf \
+                      libpng16-16 \
+                      libpng-dev \
+                      libpng-tools \
+                      libjpeg62-turbo-dev \
+                      libexpat1-dev \
+                      libgtk-3-dev \
+                      libopenal-dev \
+                      libogg-dev \
+                      libvorbis-dev \
+                      libglvnd-dev \
+                      libgl1-mesa-dev \
+                      libsdl2-dev \
+                      libpostproc-dev \
+                      freeglut3-dev \
+                      libboost-python1.81-dev \
+                      libboost-log1.81-dev \
+                      libboost-regex1.81-dev \
+                      libboost-json1.81-dev \
+                      libboost-program-options1.81-dev \
+                      libxmu-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "bullseye"|"buster"|"stretch")
+        echo "Sorry, Debian ${LINUX_CODENAME} is no longer supported"
+        exit 2
+        ;;
+    *)
+      echo "Sorry, this version of Debian is unsupported"
+      exit 2
+      ;;
+  esac
+}
+
+function bootstrapOnUbuntu()
+{
+  apt-get update
+
+  if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
+  then
+    apt-get -qy upgrade
+  fi
+
+  case "$LINUX_CODENAME" in
+    "resolute")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      libboost-python-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "questing")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      libboost-python-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "noble")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      libboost-python-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "jammy")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      libboost-python-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "plucky"|"hirsute"|"impish"|"focal"|"bionic"|"xenial")
+        echo "Sorry, Ubuntu ${LINUX_CODENAME} is no longer supported"
+        exit 2
+        ;;
+    *)
+      echo "Sorry, this version of Ubuntu is unsupported"
+      exit 2
+      ;;
+  esac
+}
+
+function bootstrapOnPopOS ()
+{
+  apt-get update
+
+  if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
+  then
+    apt-get -qy upgrade
+  fi
+
+  case "$LINUX_CODENAME" in
+    "jammy")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      automake \
+                      autoconf \
+                      libpng16-16 \
+                      libpng-dev \
+                      libpng-tools \
+                      libjpeg-turbo8-dev \
+                      libexpat1-dev \
+                      libgdk-pixbuf-2.0-dev \
+                      libgtk-3-dev \
+                      libopenal-dev \
+                      libogg-dev \
+                      libvorbis-dev \
+                      libglvnd-dev \
+                      libgl1-mesa-dev \
+                      libsdl2-dev \
+                      libopengl0 \
+                      libpostproc-dev \
+                      freeglut3-dev \
+                      libboost-python-dev \
+                      libboost-log-dev \
+                      libboost-regex-dev \
+                      libboost-program-options-dev \
+                      libxmu-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "noble")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      automake \
+                      autoconf \
+                      libpng16-16 \
+                      libpng-dev \
+                      libpng-tools \
+                      libjpeg-turbo8-dev \
+                      libexpat1-dev \
+                      libgdk-pixbuf-2.0-dev \
+                      libgtk-3-dev \
+                      libopenal-dev \
+                      libogg-dev \
+                      libvorbis-dev \
+                      libglvnd-dev \
+                      libgl1-mesa-dev \
+                      libsdl2-dev \
+                      libopengl0 \
+                      libpostproc-dev \
+                      freeglut3-dev \
+                      libboost-python-dev \
+                      libboost-log-dev \
+                      libboost-regex-dev \
+                      libboost-program-options-dev \
+                      libxmu-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    *)
+      echo "Sorry, this version of Pop! OS is not currently supported"
+      exit 2
+      ;;
+  esac
+}
+
+function bootstrapOnLinuxMint ()
+{
+  apt-get update
+
+  if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
+  then
+    apt-get -qy upgrade
+  fi
+
+  case "$LINUX_CODENAME" in
+    "wilma")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      automake \
+                      autoconf \
+                      libpng16-16 \
+                      libpng-dev \
+                      libpng-tools \
+                      libjpeg-turbo8-dev \
+                      libexpat1-dev \
+                      libgdk-pixbuf-2.0-dev \
+                      libgtk-3-dev \
+                      libopenal-dev \
+                      libogg-dev \
+                      libvorbis-dev \
+                      libglvnd-dev \
+                      libgl1-mesa-dev \
+                      libsdl2-dev \
+                      libopengl0 \
+                      libpostproc-dev \
+                      freeglut3-dev \
+                      libboost-python-dev \
+                      libboost-log-dev \
+                      libboost-regex-dev \
+                      libboost-program-options-dev \
+                      libxmu-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "virginia")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      automake \
+                      autoconf \
+                      libpng16-16 \
+                      libpng-dev \
+                      libpng-tools \
+                      libjpeg-turbo8-dev \
+                      libexpat1-dev \
+                      libgdk-pixbuf-2.0-dev \
+                      libgtk-3-dev \
+                      libopenal-dev \
+                      libogg-dev \
+                      libvorbis-dev \
+                      libglvnd-dev \
+                      libgl1-mesa-dev \
+                      libsdl2-dev \
+                      libopengl0 \
+                      libpostproc-dev \
+                      freeglut3-dev \
+                      libboost-python-dev \
+                      libboost-log-dev \
+                      libboost-regex-dev \
+                      libboost-program-options-dev \
+                      libxmu-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "victoria")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      automake \
+                      autoconf \
+                      libpng16-16 \
+                      libpng-dev \
+                      libpng-tools \
+                      libjpeg-turbo8-dev \
+                      libexpat1-dev \
+                      libgdk-pixbuf-2.0-dev \
+                      libgtk-3-dev \
+                      libopenal-dev \
+                      libogg-dev \
+                      libvorbis-dev \
+                      libglvnd-dev \
+                      libgl1-mesa-dev \
+                      libsdl2-dev \
+                      libopengl0 \
+                      libpostproc-dev \
+                      freeglut3-dev \
+                      libboost-python-dev \
+                      libboost-log-dev \
+                      libboost-regex-dev \
+                      libboost-program-options-dev \
+                      libxmu-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "vera")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      automake \
+                      autoconf \
+                      libpng16-16 \
+                      libpng-dev \
+                      libpng-tools \
+                      libjpeg-turbo8-dev \
+                      libexpat1-dev \
+                      libgdk-pixbuf-2.0-dev \
+                      libgtk-3-dev \
+                      libopenal-dev \
+                      libogg-dev \
+                      libvorbis-dev \
+                      libglvnd-dev \
+                      libgl1-mesa-dev \
+                      libsdl2-dev \
+                      libopengl0 \
+                      libpostproc-dev \
+                      freeglut3-dev \
+                      libboost-python-dev \
+                      libboost-log-dev \
+                      libboost-regex-dev \
+                      libboost-program-options-dev \
+                      libxmu-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "vanessa")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      python3-dev \
+                      build-essential \
+                      automake \
+                      autoconf \
+                      libpng16-16 \
+                      libpng-dev \
+                      libpng-tools \
+                      libjpeg-turbo8-dev \
+                      libexpat1-dev \
+                      libgdk-pixbuf-2.0-dev \
+                      libgtk-3-dev \
+                      libopenal-dev \
+                      libogg-dev \
+                      libvorbis-dev \
+                      libglvnd-dev \
+                      libgl1-mesa-dev \
+                      libsdl2-dev \
+                      libopengl0 \
+                      libpostproc-dev \
+                      freeglut3-dev \
+                      libboost-python-dev \
+                      libboost-log-dev \
+                      libboost-regex-dev \
+                      libboost-program-options-dev \
+                      libxmu-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    "ulyana")
+      apt-get -qy install \
+                      git \
+                      cmake \
+                      build-essential \
+                      automake \
+                      autoconf \
+                      libpng16-16 \
+                      libpng-dev \
+                      libpng-tools \
+                      libjpeg62-dev \
+                      libexpat1-dev \
+                      libgtk-3-dev \
+                      libopenal-dev \
+                      libogg-dev \
+                      libvorbis-dev \
+                      libglvnd-dev \
+                      libgl1-mesa-dev \
+                      libsdl2-dev \
+                      libopengl0 \
+                      libpostproc-dev \
+                      freeglut3-dev \
+                      libboost-python-dev \
+                      libboost-log-dev \
+                      libboost-regex-dev \
+                      libboost-program-options-dev \
+                      libxmu-dev \
+                      clang \
+                      lsb-release \
+                      ninja-build
+      ;;
+    *)
+      echo "This version of Linux Mint is not directly supported. You may be able to use the corresponding Ubuntu installation package"
+      exit 2
+      ;;
+  esac
+}
+
+function bootstrapOnOpenSuseLeap ()
+{
+  case "${LINUX_VERSION_ID}" in
+    "15.4")
+      zypper --non-interactive install -y \
+                              libboost_log1_75_0-devel \
+                              libboost_python-py3-1_75_0-devel \
+                              libboost_system1_75_0-devel \
+                              libboost_filesystem1_75_0-devel \
+                              libboost_thread1_75_0-devel \
+                              libboost_regex1_75_0-devel \
+                              libboost_chrono1_75_0-devel \
+                              libboost_atomic1_75_0-devel \
+                              libboost_json1_75_0-devel \
+                              libboost_program_options1_75_0-devel \
+                              cmake \
+                              gcc-c++ \
+                              freeglut-devel \
+                              libopenal0 \
+                              openal-soft-devel \
+                              libSDL2-devel \
+                              libvorbis-devel \
+                              libglvnd-devel \
+                              libjpeg-turbo \
+                              libjpeg62-devel \
+                              libpng16-devel \
+                              expat \
+                              libexpat-devel \
+                              libgtk-3-0 \
+                              gtk3-devel \
+                              python3-devel \
+                              git \
+                              rpm-build \
+                              clang \
+                              ninja
+      ;;
+    "15.5")
+      zypper --non-interactive install -y \
+                              libboost_log1_75_0-devel \
+                              libboost_python-py3-1_75_0-devel \
+                              libboost_system1_75_0-devel \
+                              libboost_filesystem1_75_0-devel \
+                              libboost_thread1_75_0-devel \
+                              libboost_regex1_75_0-devel \
+                              libboost_chrono1_75_0-devel \
+                              libboost_atomic1_75_0-devel \
+                              libboost_json1_75_0-devel \
+                              libboost_container1_75_0-devel \
+                              libboost_program_options1_75_0-devel \
+                              cmake \
+                              gcc-c++ \
+                              freeglut-devel \
+                              libopenal0 \
+                              openal-soft-devel \
+                              libSDL2-devel \
+                              libvorbis-devel \
+                              libglvnd-devel \
+                              libjpeg-turbo \
+                              libjpeg62-devel \
+                              libpng16-devel \
+                              expat \
+                              libexpat-devel \
+                              libgtk-3-0 \
+                              gtk3-devel \
+                              python3-devel \
+                              git \
+                              rpm-build \
+                              clang \
+                              ninja
+      ;;
+    "15.6")
+      zypper --non-interactive install -y \
+                              libboost_log1_75_0-devel \
+                              libboost_python-py3-1_75_0-devel \
+                              libboost_system1_75_0-devel \
+                              libboost_filesystem1_75_0-devel \
+                              libboost_thread1_75_0-devel \
+                              libboost_regex1_75_0-devel \
+                              libboost_chrono1_75_0-devel \
+                              libboost_atomic1_75_0-devel \
+                              libboost_json1_75_0-devel \
+                              libboost_container1_75_0-devel \
+                              libboost_program_options1_75_0-devel \
+                              cmake \
+                              gcc-c++ \
+                              freeglut-devel \
+                              libopenal0 \
+                              openal-soft-devel \
+                              libSDL2-devel \
+                              libvorbis-devel \
+                              libglvnd-devel \
+                              libjpeg-turbo \
+                              libjpeg62-devel \
+                              libpng16-devel \
+                              expat \
+                              libexpat-devel \
+                              libgtk-3-0 \
+                              gtk3-devel \
+                              python3-devel \
+                              git \
+                              rpm-build \
+                              clang \
+                              ninja
+      ;;
+    "16.0")
+      zypper --non-interactive install -y \
+                              libboost_log1_86_0-devel \
+                              libboost_python-py3-1_86_0-devel \
+                              libboost_system1_86_0-devel \
+                              libboost_filesystem1_86_0-devel \
+                              libboost_thread1_86_0-devel \
+                              libboost_regex1_86_0-devel \
+                              libboost_chrono1_86_0-devel \
+                              libboost_atomic1_86_0-devel \
+                              libboost_json1_86_0-devel \
+                              libboost_container1_86_0-devel \
+                              libboost_program_options1_86_0-devel \
+                              cmake \
+                              gcc-c++ \
+                              freeglut-devel \
+                              libopenal0 \
+                              openal-soft-devel \
+                              libSDL2-devel \
+                              libvorbis-devel \
+                              libglvnd-devel \
+                              libjpeg-turbo \
+                              libjpeg62-devel \
+                              libpng16-devel \
+                              expat \
+                              libexpat-devel \
+                              libgtk-3-0 \
+                              gtk3-devel \
+                              python3-devel \
+                              git \
+                              rpm-build \
+                              clang \
+                              ninja
+      ;;
+    *)
+      echo "Sorry, this version of openSUSE Leap is unsupported"
+      exit 2
+      ;;
+  esac
+}
+
+function bootstrapOnFedora ()
+{
+  case "${LINUX_VERSION_ID}" in
+    30)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          boost-python3-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    31)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          boost-python3-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    32)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          boost-python3-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    33)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          boost-python3-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    34)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    35)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    36)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    37)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    38)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    39)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    40)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    41)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    42)
+      dnf install -y \
+                          git \
+                          cmake \
+                          boost-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    *)
+      echo "Sorry, this version of Fedora is unsupported"
+      exit 2
+      ;;
+  esac
+}
+
+function bootstrapOnCentOS ()
+{
+  case "${LINUX_VERSION_ID}" in
+    "8")
+      dnf -y install dnf-plugins-core
+      dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+      dnf config-manager --set-enabled PowerTools
+      dnf -y install \
+                          git \
+                          cmake \
+                          boost-devel \
+                          boost-python3-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    "8.0")
+      dnf -y install dnf-plugins-core
+      dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+      dnf config-manager --set-enabled PowerTools
+      dnf -y install \
+                          git \
+                          cmake \
+                          boost-devel \
+                          boost-python3-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    *)
+      echo "Sorry, this version of CentOS is unsupported"
+      exit 2
+      ;;
+  esac
+}
+
+function bootstrapOnRedHat ()
+{
+  case "${LINUX_VERSION_ID}" in
+    "9.5")
+      dnf -y install dnf-plugins-core
+      dnf config-manager --set-enabled devel
+      dnf -y update
+      dnf -y install \
+                          git \
+                          cmake \
+                          boost-devel \
+                          boost-python3-devel \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    *)
+      echo "Sorry, this version of Red Hat is unsupported"
+      exit 2
+      ;;
+  esac
+}
+
+function bootstrapOnRockyLinux ()
+{
+  case "${LINUX_VERSION_ID}" in
+    "9.5")
+      dnf -y install dnf-plugins-core
+      dnf config-manager --set-enabled devel
+      dnf -y update
+      dnf -y install \
+                          git \
+                          cmake \
+                          boost-devel \
+                          boost-python3-devel \
+                          boost-json \
+                          freeglut-devel \
+                          gcc-c++ \
+                          openal-soft-devel \
+                          SDL2-devel \
+                          libvorbis-devel \
+                          libglvnd-devel \
+                          libjpeg-turbo-devel \
+                          libpng-devel \
+                          expat-devel \
+                          gtk3-devel \
+                          python3-devel \
+                          rpm-build \
+                          make \
+                          clang \
+                          ninja
+      ;;
+    *)
+      echo "Sorry, this version of Rocky Linux is unsupported"
+      exit 2
+      ;;
+  esac
+}
+
+function bootstrapOnManjaro ()
+{
+    pacman -S --refresh --noconfirm cmake \
+                   boost \
+                   clang \
+                   gcc \
+                   gcc-libs \
+                   sdl2 \
+                   expat \
+                   gtk3 \
+                   libglvnd \
+                   mesa \
+                   python \
+                   autoconf \
+                   automake \
+                   freeglut \
+                   git \
+                   libjpeg-turbo \
+                   libpng \
+                   libvorbis \
+                   libxmu \
+                   openal \
+                   make
+}
+
+function bootstrapOnFuntoo ()
+{
+  ego sync
+  dispatch-conf
+  # enable `autounmask-write` so that USE flags
+  # change in the image appropriately
+  USE="-libffi -userland_GNU gles2 X" emerge --autounmask-write \
+        cmake \
+        boost \
+        libsdl2 \
+        expat \
+        gtk3 \
+        libglvnd \
+        mesa \
+        python \
+        autoconf \
+        automake \
+        freeglut \
+        git \
+        libjpeg-turbo \
+        libpng \
+        libvorbis \
+        libXmu \
+        openal \
+        make \
+        x11-libs/gtk+
+}
+
+function bootstrapOnArch ()
+{
+  # NOTE: Arch requires GCC 12 right now
+  # also installing latest GCC.
+  pacman -Sy --noconfirm \
+        base-devel \
+        cmake \
+        boost \
+        gcc \
+        gcc12 \
+        sdl2 \
+        expat \
+        gtk3 \
+        libglvnd \
+        mesa \
+        python \
+        freeglut \
+        git \
+        libjpeg-turbo \
+        libpng \
+        libvorbis \
+        libxmu \
+        openal \
+        make
+}
+
+case "${LINUX_ID}" in
+  "debian")
+    bootstrapOnDebian
+    ;;
+  "ubuntu")
+    bootstrapOnUbuntu
+    ;;
+  "pop")
+    bootstrapOnPopOS
+    ;;
+  "linuxmint")
+    bootstrapOnLinuxMint
+    ;;
+  "opensuse-leap")
+    bootstrapOnOpenSuseLeap
+    ;;
+  "fedora")
+    bootstrapOnFedora
+    ;;
+  "centos")
+    bootstrapOnCentOS
+    ;;
+  "rhel")
+    bootstrapOnRedHat
+    ;;
+  "redhat")
+    bootstrapOnRedHat
+    ;;
+  "rocky")
+    bootstrapOnRockyLinux
+    ;;
+  "manjaro")
+    bootstrapOnManjaro
+    ;;
+  "funtoo")
+    bootstrapOnFuntoo
+    ;;
+  "arch")
+    bootstrapOnArch
+    ;;
+  *)
+    echo "Sorry, unrecognized/unsupported Linux distribution"
+    exit 2
+    ;;
+esac
+
+mkdir -pv /usr/local/src/boost_log_python_poc
+
+echo "Bootstrapping finished!"

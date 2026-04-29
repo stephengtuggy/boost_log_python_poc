@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 #
-# Copyright © 2025 Stephen G. Tuggy
+# Copyright © 2025-2026 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -24,10 +24,14 @@ name: MacOS-CI
 permissions:
   contents: read
   pull-requests: read
+
 on:
   push:
   pull_request:
   workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build_and_test:
@@ -44,22 +48,22 @@ jobs:
           - os: macOS-14
             build-type: RelWithDebInfo
             preset-name: macos-pie-enabled-RelWithDebInfo
-            python-version: 3.13.9
+            python-version: 3.13.12
           - os: macOS-15-intel
             build-type: Release
             preset-name: macos-pie-enabled-release
-            python-version: 3.14.0
+            python-version: 3.14.3
 
     steps:
       - name: Python Setup on Mac
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-        id: vega-py-setup
+        id: poc-py-setup
         with:
           python-version: ${{ matrix.python-version }}
           update-environment: false
 
       - name: Install dependencies using homebrew
-        run: brew install boost-python3
+        run: ./script/bootstrap 1
 
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -73,10 +77,9 @@ jobs:
       - name: run-build-script
         working-directory: ${{ github.workspace }}
         env:
-          MY_OS_NAME: macos
-          Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
-          Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
-          pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
+          Python3_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
+          Python_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
+          pythonLocation: ${{ steps.poc-py-setup.outputs.python-path }}
           PYTHONHOME: ""
           PYTHONPATH: ""
         run: ./script/build --preset_name=${{ matrix.preset-name }}

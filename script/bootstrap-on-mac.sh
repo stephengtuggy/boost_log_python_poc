@@ -1,6 +1,7 @@
+#!/usr/bin/env bash
 # The MIT License (MIT)
 #
-# Copyright © 2023-2026 Stephen G. Tuggy
+# Copyright © 2026 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -19,47 +20,33 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+# ====================================
+# @file   : bootstrap-on-mac.sh
+# @brief  : installs dependencies for building boost_log_python_poc on macOS
+# @usage  : sudo script/bootstrap-on-mac.sh 1 (to run brew update in the process)
+#     or  : sudo script/bootstrap-on-mac.sh 0 (to skip running brew update)
+# @param  : just one parameter, either a 1 or a 0, to indicate whether or not to
+#           run brew update
+# ====================================
 
-name: Ubuntu-Noble-CI
-permissions:
-  contents: read
-  pull-requests: read
+set -e
 
-# Controls when the action will run.
-on:
-  push:
-  pull_request:
-  workflow_dispatch:
+UPDATE_ALL_SYSTEM_PACKAGES="$1"
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+DETECT_MAC_OS_VERSION=$(sw_vers -productVersion | cut -f 1,2 -d '.')
+echo "Detected macOS Version: ${DETECT_MAC_OS_VERSION}"
 
-jobs:
-  build_and_test:
-    runs-on: ubuntu-24.04
-    continue-on-error: false
-    defaults:
-      run:
-        shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        COMPILER:
-          - 'gcc'
-          - 'clang'
-        preset-name:
-          - 'linux-ninja-pie-enabled-RelWithDebInfo'
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 2
-          submodules: false
+if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
+then
+  # Ensure we're using the latest formulae
+  brew update
+fi
 
-      - name: Bootstrap
-        run: sudo script/bootstrap 1
+brew install \
+    gcc \
+    python3 \
+    boost-python3 \
+    ninja
 
-      - name: Build and Test
-        env:
-          COMPILER: ${{ matrix.COMPILER }}
-        run: script/docker-entrypoint.sh --preset_name=${{ matrix.preset-name }}
+# Only install cmake if it isn't installed yet
+brew ls --versions cmake || brew install cmake
