@@ -403,7 +403,8 @@ function bootstrapOnManjaro ()
                    gcc-libs \
                    python \
                    git \
-                   make
+                   make \
+                   ninja
 }
 
 function bootstrapOnFuntoo ()
@@ -437,7 +438,8 @@ function bootstrapOnArch ()
         gcc12 \
         python \
         git \
-        make
+        make \
+        ninja
 }
 
 case "${LINUX_ID}" in
