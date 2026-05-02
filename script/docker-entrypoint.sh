@@ -56,7 +56,7 @@ while [ $# -gt 0 ]; do
 done
 
 echo "Re-run bootstrap"
-sudo script/bootstrap 1
+./script/bootstrap 1
 
 if [ "$COMPILER" == "gcc" ]
 then
