@@ -54,6 +54,8 @@ jobs:
           - 'clang'
         preset-name:
           - 'linux-ninja-pie-enabled-RelWithDebInfo'
+        build-type:
+          - 'RelWithDebInfo'
     steps:
       - name: Check out repository code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -66,7 +68,7 @@ jobs:
           FROM:       ${{ matrix.FROM }}
           COMPILER:   ${{ matrix.COMPILER }}
           IS_RELEASE: 0
-        run: script/cibuild --preset_name=${{ matrix.preset-name }}
+        run: script/cibuild --preset_name=${{ matrix.preset-name }} --build_type=${{ matrix.build-type }}
 
       - name: Upload test results
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

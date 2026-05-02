@@ -57,8 +57,12 @@ done
 
 baseDir=$(pwd)
 testBaseDir="${baseDir}/build/${preset_name}"
-pushd "${testBaseDir}"
+binaryDir="${baseDir}/build/${preset_name}/${build_type}"
 
-ctest -V --preset "test-${preset_name}"
+find "${baseDir}/build/${preset_name}" -name boost_log_python_poc
+
+pushd "${binaryDir}"
+
+./boost_log_python_poc
 
 popd

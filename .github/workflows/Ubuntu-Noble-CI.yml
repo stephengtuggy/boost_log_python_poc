@@ -49,6 +49,8 @@ jobs:
           - 'clang'
         preset-name:
           - 'linux-ninja-pie-enabled-RelWithDebInfo'
+        build-type:
+          - 'RelWithDebInfo'
     steps:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -59,9 +61,10 @@ jobs:
       - name: Bootstrap
         run: sudo ./script/bootstrap 1
 
-      - name: Build and Test
+      - name: Build the code
         env:
           COMPILER: ${{ matrix.COMPILER }}
-        run: |
-          ./script/build --preset_name=${{ matrix.preset-name }}
-          ./build/"${{ matrix.preset-name }}"/boost_log_python_poc
+        run: ./script/build --preset_name=${{ matrix.preset-name }}
+
+      - name: Test the code
+        run: ./script/test --preset_name=${{ matrix.preset-name }} --build_type=${{ matrix.build-type }}

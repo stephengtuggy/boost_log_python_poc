@@ -73,6 +73,11 @@ then
   preset_name="${PRESET_NAME}"
 fi
 
+if [ -z "$build_type" ] && [ -n "$BUILD_TYPE" ]
+then
+  build_type="${BUILD_TYPE}"
+fi
+
 ./script/build --preset_name="${preset_name}"
 
-./build/"${preset_name}"/boost_log_python_poc
+./script/test --preset_name="${preset_name}" --build_type="${build_type}"

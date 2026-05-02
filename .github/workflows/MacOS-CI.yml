@@ -62,12 +62,16 @@ jobs:
       - name: Install dependencies using homebrew
         run: ./script/bootstrap 1
 
-      - name: install-cmake
+      - name: Install CMake
         uses: lukka/get-cmake@7bfc9baacbbdcb5e37957ad05c3546b3e222be3c # v4.3.2
 
-      - name: run-build-script
+      - name: Build the code
         working-directory: ${{ github.workspace }}
         env:
           PYTHONHOME:
           PYTHONPATH:
         run: ./script/build --preset_name=${{ matrix.preset-name }}
+
+      - name: Test the code
+        working-directory: ${{ github.workspace }}
+        run: ./script/test --preset_name=${{ matrix.preset-name }} --build_type=${{ matrix.build-type }}
