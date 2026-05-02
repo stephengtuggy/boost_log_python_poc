@@ -183,6 +183,7 @@ function bootstrapOnOpenSuseLeap ()
       zypper --non-interactive install -y \
                               libboost_log1_75_0-devel \
                               libboost_python-py3-1_75_0-devel \
+                              libboost_thread1_75_0-devel \
                               cmake \
                               gcc-c++ \
                               python3-devel \
@@ -195,6 +196,7 @@ function bootstrapOnOpenSuseLeap ()
       zypper --non-interactive install -y \
                               libboost_log1_86_0-devel \
                               libboost_python-py3-1_86_0-devel \
+                              libboost_thread1_86_0-devel \
                               cmake \
                               gcc-c++ \
                               python3-devel \
