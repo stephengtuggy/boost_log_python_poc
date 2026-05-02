@@ -34,7 +34,7 @@
 set -e
 
 echo "------------------------------------------"
-echo "--- bootstrap-on-linux.sh | 2026-04-29 ---"
+echo "--- bootstrap-on-linux.sh | 2026-05-01 ---"
 echo "------------------------------------------"
 
 UPDATE_ALL_SYSTEM_PACKAGES="$1"
@@ -264,7 +264,7 @@ function bootstrapOnRedHat ()
                           rpm-build \
                           make \
                           clang \
-                          ninja
+                          ninja-build
       ;;
     "9.6"|"9.7")
       if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
@@ -286,7 +286,7 @@ function bootstrapOnRedHat ()
                           rpm-build \
                           make \
                           clang \
-                          ninja
+                          ninja-build
       ;;
     "10.0"|"10.1")
       dnf -y upgrade --refresh
@@ -305,7 +305,7 @@ function bootstrapOnRedHat ()
                           rpm-build \
                           make \
                           clang \
-                          ninja
+                          ninja-build
       ;;
     *)
       echo "Sorry, this version of Red Hat is unsupported"
@@ -337,7 +337,7 @@ function bootstrapOnRockyLinux ()
                           rpm-build \
                           make \
                           clang \
-                          ninja
+                          ninja-build
       ;;
     "9.6")
       if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
@@ -359,7 +359,7 @@ function bootstrapOnRockyLinux ()
                           rpm-build \
                           make \
                           clang \
-                          ninja
+                          ninja-build
       ;;
     "10.0"|"10.1")
       dnf -y upgrade --refresh
@@ -378,7 +378,7 @@ function bootstrapOnRockyLinux ()
                           rpm-build \
                           make \
                           clang \
-                          ninja
+                          ninja-build
       ;;
     *)
       echo "Sorry, this version of Rocky Linux is unsupported"
