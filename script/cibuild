@@ -55,11 +55,11 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-if [ "$COMPILER" == "gcc" ]
+if [ "${COMPILER}" == "gcc" ]
 then
   export CC=gcc
   export CXX=g++
-elif [ "$COMPILER" == "clang" ]
+elif [ "${COMPILER}" == "clang" ]
 then
   export CC=clang
   export CXX=clang++
@@ -85,11 +85,13 @@ platform="$(uname | tr '[:upper:]' '[:lower:]')"
 
 case "$platform" in
   "linux"|"linux-gnu")
-    SRC_DOCKER_IMG_NAME="vegastrike/vega-strike-build-env:$(echo $FROM | sed 's/:/_/' | sed 's/\//_/')"
-    DOCKER_CONTAINER_NAME="building-vega-strike_$(echo $FROM | sed 's/:/_/' | sed 's/\//_/')"
+    DOCKER_IMG_NAME="local_building-boost-log-python-poc:$(echo "${from}" | sed 's/:/_/' | sed 's/\//_/')"
+    DOCKER_CONTAINER_NAME="building-boost-log-python-poc_$(echo "${from}" | sed 's/:/_/' | sed 's/\//_/')"
     PRESET_NAME="${preset_name}"
-    echo "Running docker image for $FROM / $COMPILER"
-    docker run --env CC="$CC" --env CXX="$CXX" --env IS_RELEASE="$IS_RELEASE" --env TAG_NAME="$TAG_NAME" --env GITHUB_SHA="$GITHUB_SHA" --env SHORT_SHA="$SHORT_SHA" --env PRESET_NAME="$PRESET_NAME" --name "$DOCKER_CONTAINER_NAME" "$SRC_DOCKER_IMG_NAME"
+    echo "Building docker image for ${from}"
+    docker build --build-arg from="${from}" -t "$DOCKER_IMG_NAME" .
+    echo "Running docker image for ${from} / ${COMPILER}"
+    docker run --env CC="$CC" --env CXX="$CXX" --env IS_RELEASE="$IS_RELEASE" --env TAG_NAME="$TAG_NAME" --env GITHUB_SHA="$GITHUB_SHA" --env SHORT_SHA="$SHORT_SHA" --env PRESET_NAME="$PRESET_NAME" --name "$DOCKER_CONTAINER_NAME" "$DOCKER_IMG_NAME"
     docker rm "$DOCKER_CONTAINER_NAME"
     ;;
   "darwin")
