@@ -107,15 +107,11 @@ _deps
 CMakeUserPresets.json
 
 ### SGT Custom
-build/
-build-*/
-bin/
-packages/
 .vs/
 .vscode/
+.git/
 data/
 ext/
-*.pyc
 *.log
 *.bak
 .editorconfig
