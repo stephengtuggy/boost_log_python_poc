@@ -266,7 +266,7 @@ function bootstrapOnRedHat ()
                           clang \
                           ninja
       ;;
-    "9.6")
+    "9.6"|"9.7")
       if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
       then
         dnf -y upgrade --refresh
@@ -412,7 +412,7 @@ function bootstrapOnFuntoo ()
   dispatch-conf
   # enable `autounmask-write` so that USE flags
   # change in the image appropriately
-  USE="-libffi -userland_GNU gles2 X" emerge --autounmask-write \
+  USE="-libffi -userland_GNU" emerge --autounmask-write \
         cmake \
         boost \
         python \
