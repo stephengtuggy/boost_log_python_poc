@@ -48,20 +48,11 @@ jobs:
           - os: macOS-14
             build-type: RelWithDebInfo
             preset-name: macos-pie-enabled-RelWithDebInfo
-            python-version: 3.13.12
           - os: macOS-15-intel
             build-type: Release
             preset-name: macos-pie-enabled-release
-            python-version: 3.14.3
 
     steps:
-      - name: Python Setup on Mac
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-        id: poc-py-setup
-        with:
-          python-version: ${{ matrix.python-version }}
-          update-environment: false
-
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -77,9 +68,6 @@ jobs:
       - name: run-build-script
         working-directory: ${{ github.workspace }}
         env:
-          Python3_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
-          Python_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
-          pythonLocation: ${{ steps.poc-py-setup.outputs.python-path }}
-          PYTHONHOME: ""
-          PYTHONPATH: ""
+          PYTHONHOME:
+          PYTHONPATH:
         run: ./script/build --preset_name=${{ matrix.preset-name }}

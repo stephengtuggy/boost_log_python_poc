@@ -44,7 +44,6 @@ fi
 
 brew install \
     gcc \
-    python3 \
     boost-python3 \
     ninja
 
