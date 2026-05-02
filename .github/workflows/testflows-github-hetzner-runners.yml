@@ -55,4 +55,6 @@ jobs:
           COMPILER: ${{ matrix.COMPILER }}
         run: script/build --preset_name=${{ matrix.preset_name }}
       - name: Test the code
+        env:
+          PYTHONUNBUFFERED: 1
         run: script/test --preset_name=${{ matrix.preset_name }} --build_type=${{ matrix.build_type }}

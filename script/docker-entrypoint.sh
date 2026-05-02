@@ -80,4 +80,4 @@ fi
 
 ./script/build --preset_name="${preset_name}"
 
-./script/test --preset_name="${preset_name}" --build_type="${build_type}"
+PYTHONUNBUFFERED=1 ./script/test --preset_name="${preset_name}" --build_type="${build_type}"

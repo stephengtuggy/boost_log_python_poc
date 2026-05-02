@@ -74,4 +74,6 @@ jobs:
 
       - name: Test the code
         working-directory: ${{ github.workspace }}
+        env:
+          PYTHONUNBUFFERED: 1
         run: ./script/test --preset_name=${{ matrix.preset-name }} --build_type=${{ matrix.build-type }}

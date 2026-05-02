@@ -67,4 +67,6 @@ jobs:
         run: ./script/build --preset_name=${{ matrix.preset-name }}
 
       - name: Test the code
+        env:
+          PYTHONUNBUFFERED: 1
         run: ./script/test --preset_name=${{ matrix.preset-name }} --build_type=${{ matrix.build-type }}
