@@ -24,7 +24,7 @@
 set -e
 
 echo "-----------------------------------------"
-echo "--- docker-entrypoint.sh | 2026-04-29 ---"
+echo "--- docker-entrypoint.sh | 2026-05-01 ---"
 echo "-----------------------------------------"
 
 #----------------------------------
@@ -73,4 +73,6 @@ then
   preset_name="${PRESET_NAME}"
 fi
 
-script/build --preset_name="${preset_name}"
+./script/build --preset_name="${preset_name}"
+
+./build/"${preset_name}"/boost_log_python_poc
