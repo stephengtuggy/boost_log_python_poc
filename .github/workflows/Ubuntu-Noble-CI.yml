@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 #
-# Copyright © 2023-2025 Stephen G. Tuggy
+# Copyright © 2023-2026 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -27,37 +27,46 @@ permissions:
 
 # Controls when the action will run.
 on:
-    push:
-    pull_request:
-    # Allows you to run this workflow manually from the Actions tab
-    workflow_dispatch:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-    build_and_test:
-        runs-on: ubuntu-24.04
-        continue-on-error: false
-        defaults:
-            run:
-                shell: bash
-        strategy:
-            fail-fast: false
-            matrix:
-                COMPILER:
-                    - 'gcc'
-                    - 'clang'
-                preset-name:
-                    - 'linux-ninja-pie-enabled-RelWithDebInfo'
-        steps:
-            - name: Check out repository
-              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-              with:
-                  fetch-depth: 2
-                  submodules: false
+  build_and_test:
+    runs-on: ubuntu-24.04
+    continue-on-error: false
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        COMPILER:
+          - 'gcc'
+          - 'clang'
+        preset-name:
+          - 'linux-ninja-pie-enabled-RelWithDebInfo'
+        build-type:
+          - 'RelWithDebInfo'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 2
+          submodules: false
 
-            - name: Bootstrap
-              run: sudo script/bootstrap
+      - name: Bootstrap
+        run: sudo ./script/bootstrap 1
 
-            - name: Build and Test
-              env:
-                  COMPILER: ${{ matrix.COMPILER }}
-              run: script/docker-entrypoint.sh --preset_name=${{ matrix.preset-name }}
+      - name: Build the code
+        env:
+          COMPILER: ${{ matrix.COMPILER }}
+        run: ./script/build --preset_name=${{ matrix.preset-name }}
+
+      - name: Test the code
+        env:
+          PYTHONUNBUFFERED: 1
+        run: ./script/test --preset_name=${{ matrix.preset-name }} --build_type=${{ matrix.build-type }}

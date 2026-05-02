@@ -27,8 +27,13 @@ param(
 
 [String]$baseDir = (Get-Location -PSProvider "FileSystem").Path
 [String]$testBaseDir = "$baseDir\build\$PresetName"
-Push-Location $testBaseDir
+[String]$binaryDir = "$baseDir\build\$PresetName\$BuildType"
 
-ctest -V --preset "test-$PresetName"
+echo 'Listing Directory Contents'
+Get-ChildItem -LiteralPath "$baseDir\build\$PresetName" -Recurse -Force -File -Filter 'boost_log_python_poc.exe'
+
+Push-Location $binaryDir
+
+.\boost_log_python_poc.exe
 
 Pop-Location

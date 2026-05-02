@@ -29,9 +29,10 @@ permissions:
 on:
   push:
   pull_request:
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build_and_test:
@@ -85,7 +86,7 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-        id: vega-py-setup
+        id: poc-py-setup
         with:
           python-version: ${{ matrix.python-version }}
           update-environment: false
@@ -94,22 +95,30 @@ jobs:
         uses: lukka/get-cmake@7bfc9baacbbdcb5e37957ad05c3546b3e222be3c # v4.3.2
 
       - name: Install vcpkg
-        uses: lukka/run-vcpkg@08ab0cc59d3f33647c5dc2b1e8f2093266c7b873 # Node 24 compatible version
+        uses: lukka/run-vcpkg@b1a0dd252f06b9e25b3c022a9a03bd7a427fb6a2 # v11.6
+        env:
+          Python3_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
+          Python_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
+          pythonLocation: ${{ steps.poc-py-setup.outputs.python-path }}
+
+      - name: Build the code
+        run: |
+          & "${{ github.workspace }}\\script\\build.ps1" -PresetName "${{ matrix.preset-name }}"
+        shell: pwsh
         env:
           Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
 
-      - name: Build and test the code
-        uses: lukka/run-cmake@5d55ea7949e25f69f0ecb516d8d572297e03a956 # v10.9
+      - name: Test the code
+        run: |
+          & "${{ github.workspace }}\\script\\test.ps1" -PresetName "${{ matrix.preset-name }}" -BuildType "${{ matrix.build-type }}"
+        shell: pwsh
         env:
           Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
-        with:
-          configurePreset: ${{ matrix.preset-name }}
-          buildPreset: "build-${{ matrix.preset-name }}"
-          testPreset: "test-${{ matrix.preset-name }}"
+          PYTHONUNBUFFERED: 1
 
       - name: Save vcpkg cache
         uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5

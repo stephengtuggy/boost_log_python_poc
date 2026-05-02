@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 #
-# Copyright © 2025 Stephen G. Tuggy
+# Copyright © 2025-2026 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -24,10 +24,14 @@ name: MacOS-CI
 permissions:
   contents: read
   pull-requests: read
+
 on:
   push:
   pull_request:
   workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build_and_test:
@@ -44,39 +48,32 @@ jobs:
           - os: macOS-14
             build-type: RelWithDebInfo
             preset-name: macos-pie-enabled-RelWithDebInfo
-            python-version: 3.13.9
           - os: macOS-15-intel
             build-type: Release
             preset-name: macos-pie-enabled-release
-            python-version: 3.14.0
 
     steps:
-      - name: Python Setup on Mac
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-        id: vega-py-setup
-        with:
-          python-version: ${{ matrix.python-version }}
-          update-environment: false
-
-      - name: Install dependencies using homebrew
-        run: brew install boost-python3
-
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 2
           submodules: false
 
-      - name: install-cmake
+      - name: Install dependencies using homebrew
+        run: ./script/bootstrap 1
+
+      - name: Install CMake
         uses: lukka/get-cmake@7bfc9baacbbdcb5e37957ad05c3546b3e222be3c # v4.3.2
 
-      - name: run-build-script
+      - name: Build the code
         working-directory: ${{ github.workspace }}
         env:
-          MY_OS_NAME: macos
-          Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
-          Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
-          pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
-          PYTHONHOME: ""
-          PYTHONPATH: ""
+          PYTHONHOME:
+          PYTHONPATH:
         run: ./script/build --preset_name=${{ matrix.preset-name }}
+
+      - name: Test the code
+        working-directory: ${{ github.workspace }}
+        env:
+          PYTHONUNBUFFERED: 1
+        run: ./script/test --preset_name=${{ matrix.preset-name }} --build_type=${{ matrix.build-type }}

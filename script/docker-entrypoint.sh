@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The MIT License (MIT)
 #
-# Copyright © 2025 Stephen G. Tuggy
+# Copyright © 2025-2026 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -24,7 +24,7 @@
 set -e
 
 echo "-----------------------------------------"
-echo "--- docker-entrypoint.sh | 2025-11-26 ---"
+echo "--- docker-entrypoint.sh | 2026-05-01 ---"
 echo "-----------------------------------------"
 
 #----------------------------------
@@ -55,19 +55,29 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+echo "Re-run bootstrap"
+./script/bootstrap 1
+
 if [ "$COMPILER" == "gcc" ]
 then
-    export CC=gcc
-    export CXX=g++
+  export CC=gcc
+  export CXX=g++
 elif [ "$COMPILER" == "clang" ]
 then
-    export CC=clang
-    export CXX=clang++
+  export CC=clang
+  export CXX=clang++
 fi
 
 if [ -z "$preset_name" ] && [ -n "$PRESET_NAME" ]
 then
-    preset_name="${PRESET_NAME}"
+  preset_name="${PRESET_NAME}"
 fi
 
-script/build --preset_name="${preset_name}"
+if [ -z "$build_type" ] && [ -n "$BUILD_TYPE" ]
+then
+  build_type="${BUILD_TYPE}"
+fi
+
+./script/build --preset_name="${preset_name}"
+
+PYTHONUNBUFFERED=1 ./script/test --preset_name="${preset_name}" --build_type="${build_type}"

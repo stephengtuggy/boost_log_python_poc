@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 #
-# Copyright © 2023-2025 Stephen G. Tuggy
+# Copyright © 2023-2026 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -29,9 +29,10 @@ permissions:
 on:
   push:
   pull_request:
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build_and_test:
@@ -46,21 +47,26 @@ jobs:
       fail-fast: false
       matrix:
         FROM:
+          - 'ubuntu:resolute'
           - 'ubuntu:questing'
           - 'ubuntu:noble'
+          - 'linuxmintd/mint22.3-amd64'
           - 'linuxmintd/mint22.2-amd64'
           - 'linuxmintd/mint22-amd64'
-          - 'debian:trixie'
+          - 'dhi.io/python:3.13-debian13-dev'
           - 'opensuse/leap:16.0'
+          - 'fedora:44'
           - 'fedora:43'
           - 'fedora:42'
-          - 'rockylinux_rockylinux:10.0'
+          - 'rockylinux/rockylinux:10.1'
           - 'manjarolinux/base'
         COMPILER:
           - 'gcc'
           - 'clang'
         preset-name:
           - 'linux-ninja-pie-enabled-RelWithDebInfo'
+        build-type:
+          - 'RelWithDebInfo'
 
     steps:
       - name: Check out repository
@@ -73,9 +79,8 @@ jobs:
         env:
           FROM:       ${{ matrix.FROM }}
           COMPILER:   ${{ matrix.COMPILER }}
-          MY_OS_NAME: linux
           IS_RELEASE: 0
-        run: script/cibuild --preset_name=${{ matrix.preset-name }}
+        run: script/cibuild --preset_name=${{ matrix.preset-name }} --build_type=${{ matrix.build-type }}
 
       - name: Upload test results
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

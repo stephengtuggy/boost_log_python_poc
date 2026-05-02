@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The MIT License (MIT)
 #
-# Copyright © 2023-2025 Stephen G. Tuggy
+# Copyright © 2023-2026 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -22,8 +22,9 @@
 # THE SOFTWARE.
 
 set -e
+
 echo "----------------------------"
-echo "--- cibuild | 2025-11-26 ---"
+echo "--- cibuild | 2026-05-01 ---"
 echo "----------------------------"
 
 #----------------------------------
@@ -54,25 +55,58 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-if [ "$COMPILER" == "gcc" ]
+if [ "${COMPILER}" == "gcc" ]
 then
-    export CC=gcc
-    export CXX=g++
-elif [ "$COMPILER" == "clang" ]
+  export CC=gcc
+  export CXX=g++
+elif [ "${COMPILER}" == "clang" ]
 then
-    export CC=clang
-    export CXX=clang++
+  export CC=clang
+  export CXX=clang++
 fi
 
-if [ "$MY_OS_NAME" == "linux" ]
+if [ $IS_RELEASE -eq 1 ]
 then
-    SRC_DOCKER_IMG_NAME="vegastrike/vega-strike-build-env:$(echo $FROM | sed 's/:/_/' | sed 's/\//_/')"
-    DOCKER_CONTAINER_NAME="building-vega-strike_$(echo $FROM | sed 's/:/_/' | sed 's/\//_/')"
-    PRESET_NAME="${preset_name}"
-    echo "Running docker image for $FROM / $COMPILER"
-    docker run --env CC="$CC" --env CXX="$CXX" --env IS_RELEASE="$IS_RELEASE" --env TAG_NAME="$TAG_NAME" --env GITHUB_SHA="$GITHUB_SHA" --env SHORT_SHA="$SHORT_SHA" --env PRESET_NAME="$PRESET_NAME" --name "$DOCKER_CONTAINER_NAME" "$SRC_DOCKER_IMG_NAME"
-else
-    script/docker-entrypoint.sh --preset_name="${preset_name}"
+  export INSTALL_GTEST=0
+  export USE_GTEST=0
 fi
+
+if [ -z "$from" ] && [ -n "$FROM" ]
+then
+  from="${FROM}"
+fi
+
+if [ -z "$preset_name" ] && [ -n "$PRESET_NAME" ]
+then
+  preset_name="${PRESET_NAME}"
+fi
+
+if [ -z "$build_type" ] && [ -n "$BUILD_TYPE" ]
+then
+  build_type="${BUILD_TYPE}"
+fi
+
+platform="$(uname | tr '[:upper:]' '[:lower:]')"
+
+case "$platform" in
+  "linux"|"linux-gnu")
+    DOCKER_IMG_NAME="local_building-boost-log-python-poc:$(echo "${from}" | sed 's/:/_/' | sed 's/\//_/')"
+    DOCKER_CONTAINER_NAME="building-boost-log-python-poc_$(echo "${from}" | sed 's/:/_/' | sed 's/\//_/')"
+    PRESET_NAME="${preset_name}"
+    BUILD_TYPE="${build_type}"
+    echo "Building docker image for ${from}"
+    docker build --build-arg from="${from}" -t "$DOCKER_IMG_NAME" .
+    echo "Running docker image for ${from} / ${COMPILER}"
+    docker run --env CC="$CC" --env CXX="$CXX" --env IS_RELEASE="$IS_RELEASE" --env TAG_NAME="$TAG_NAME" --env GITHUB_SHA="$GITHUB_SHA" --env SHORT_SHA="$SHORT_SHA" --env PRESET_NAME="$PRESET_NAME" --env BUILD_TYPE="$BUILD_TYPE" --name "$DOCKER_CONTAINER_NAME" "$DOCKER_IMG_NAME"
+    docker rm "$DOCKER_CONTAINER_NAME"
+    ;;
+  "darwin")
+    script/docker-entrypoint.sh --preset_name="${preset_name}" --build_type="${build_type}"
+    ;;
+  *)
+    echo "Sorry, unrecognized or unsupported operating system"
+    exit 2
+    ;;
+esac
 
 echo "cibuild Done!"
