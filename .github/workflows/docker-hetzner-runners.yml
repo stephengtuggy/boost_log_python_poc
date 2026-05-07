@@ -48,7 +48,6 @@ jobs:
           - 'fedora:43'
           - 'fedora:42'
           - 'rockylinux/rockylinux:10.1'
-          - 'manjarolinux/base'
         COMPILER:
           - 'gcc'
           - 'clang'

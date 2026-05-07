@@ -398,6 +398,7 @@ function bootstrapOnManjaro ()
     pacman -Syyu --refresh --noconfirm
   fi
 
+  pacman -Sy --noconfirm base-devel --needed
   pacman -Sy --noconfirm cmake \
                    boost \
                    clang \
