@@ -46,7 +46,6 @@ jobs:
           - 'opensuse/leap:16.0'
           - 'fedora:44'
           - 'fedora:43'
-          - 'fedora:42'
           - 'rockylinux/rockylinux:10.1'
         COMPILER:
           - 'gcc'
