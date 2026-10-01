@@ -340,15 +340,15 @@ function bootstrapOnRockyLinux ()
 
 function bootstrapOnManjaro ()
 {
-  pacman -Sy --noconfirm archlinux-keyring manjaro-keyring
+  pacman -Sy --needed --noconfirm archlinux-keyring manjaro-keyring
 
   if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
   then
     pacman -Syyu --refresh --noconfirm
   fi
 
-  pacman -Sy --noconfirm base-devel --needed
-  pacman -Sy --noconfirm cmake \
+  pacman -Sy --needed --noconfirm base-devel
+  pacman -Sy --needed --noconfirm cmake \
                    boost \
                    clang \
                    gcc \
@@ -382,7 +382,7 @@ function bootstrapOnArch ()
 
   # NOTE: Arch requires GCC 12 right now
   # also installing latest GCC.
-  pacman -Sy --noconfirm \
+  pacman -Sy --needed --noconfirm \
         base-devel \
         cmake \
         boost \
@@ -396,14 +396,14 @@ function bootstrapOnArch ()
 
 function bootstrapOnEndeavourOS ()
 {
-  pacman -Sy --noconfirm archlinux-keyring
+  pacman -Sy --needed --noconfirm archlinux-keyring
 
   if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
   then
     pacman -Syyu --refresh --noconfirm
   fi
 
-  pacman -Sy --noconfirm \
+  pacman -Sy --needed --noconfirm \
         base-devel \
         cmake \
         boost \
@@ -416,15 +416,16 @@ function bootstrapOnEndeavourOS ()
 
 function bootstrapOnCachyOS ()
 {
-#  pacman -Sy --noconfirm archlinux-keyring
+#  pacman -Sy --needed --noconfirm archlinux-keyring
 
   if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
   then
     pacman -Syyu --refresh --noconfirm
   fi
 
-  pacman -Sy --noconfirm \
+  pacman -Sy --needed --noconfirm \
         base-devel \
+        boost \
         cmake \
         gcc \
         git \
