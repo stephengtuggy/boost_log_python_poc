@@ -50,15 +50,9 @@ jobs:
           - os: macOS-15
             build-type: RelWithDebInfo
             preset-name: macos-pie-enabled-RelWithDebInfo
-          - os: macOS-15-intel
-            build-type: Release
-            preset-name: macos-pie-enabled-release
           - os: macOS-26
             build-type: Debug
             preset-name: macos-pie-enabled-debug
-          - os: macOS-26-intel
-            build-type: RelWithDebInfo
-            preset-name: macos-pie-enabled-RelWithDebInfo
 
     steps:
       - name: Check out repository
