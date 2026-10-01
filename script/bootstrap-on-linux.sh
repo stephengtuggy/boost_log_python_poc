@@ -394,6 +394,45 @@ function bootstrapOnArch ()
         ninja
 }
 
+function bootstrapOnEndeavourOS ()
+{
+  pacman -Sy --noconfirm archlinux-keyring
+
+  if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
+  then
+    pacman -Syyu --refresh --noconfirm
+  fi
+
+  pacman -Sy --noconfirm \
+        base-devel \
+        cmake \
+        boost \
+        gcc \
+        python \
+        git \
+        make \
+        ninja
+}
+
+function bootstrapOnCachyOS ()
+{
+#  pacman -Sy --noconfirm archlinux-keyring
+
+  if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
+  then
+    pacman -Syyu --refresh --noconfirm
+  fi
+
+  pacman -Sy --noconfirm \
+        base-devel \
+        cmake \
+        gcc \
+        git \
+        python \
+        make \
+        ninja
+ }
+
 case "${LINUX_ID}" in
   "debian")
     bootstrapOnDebian
@@ -430,6 +469,12 @@ case "${LINUX_ID}" in
     ;;
   "arch")
     bootstrapOnArch
+    ;;
+  "endeavouros")
+    bootstrapOnEndeavourOS
+    ;;
+  "cachyos")
+    bootstrapOnCachyOS
     ;;
   *)
     echo "Sorry, unrecognized/unsupported Linux distribution"
