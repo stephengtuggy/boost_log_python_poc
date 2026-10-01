@@ -319,26 +319,6 @@ function bootstrapOnRockyLinux() {
     esac
 }
 
-function bootstrapOnManjaro() {
-    pacman -Syu --needed --noconfirm archlinux-keyring manjaro-keyring
-
-    if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]; then
-        pacman -Syyu --refresh --noconfirm
-    fi
-
-    pacman -Syu --needed --noconfirm base-devel
-    pacman -Syu --needed --noconfirm \
-        boost \
-        clang \
-        cmake \
-        gcc \
-        gcc-libs \
-        git \
-        make \
-        ninja \
-        python
-}
-
 function bootstrapOnFuntoo() {
     ego sync
     dispatch-conf
@@ -366,6 +346,26 @@ function bootstrapOnArch() {
         cmake \
         gcc \
         gcc12 \
+        git \
+        make \
+        ninja \
+        python
+}
+
+function bootstrapOnManjaro() {
+    pacman -Syu --needed --noconfirm archlinux-keyring manjaro-keyring
+
+    if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]; then
+        pacman -Syyu --refresh --noconfirm
+    fi
+
+    pacman -Syu --needed --noconfirm base-devel
+    pacman -Syu --needed --noconfirm \
+        boost \
+        clang \
+        cmake \
+        gcc \
+        gcc-libs \
         git \
         make \
         ninja \
@@ -438,14 +438,14 @@ case "${LINUX_ID}" in
 "rocky")
     bootstrapOnRockyLinux
     ;;
-"manjaro")
-    bootstrapOnManjaro
-    ;;
 "funtoo")
     bootstrapOnFuntoo
     ;;
 "arch")
     bootstrapOnArch
+    ;;
+"manjaro")
+    bootstrapOnManjaro
     ;;
 "endeavouros")
     bootstrapOnEndeavourOS
