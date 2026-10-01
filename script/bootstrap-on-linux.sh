@@ -162,7 +162,7 @@ function bootstrapOnLinuxMint ()
   fi
 
   case "$LINUX_CODENAME" in
-    "alfa"|"zena"|"zara"|"wilma"|"virginia"|"victoria"|"vera"|"vanessa"|"ulyana")
+    "zena"|"zara"|"wilma"|"virginia"|"victoria"|"vera"|"vanessa"|"ulyana")
       apt-get -qy install \
                       git \
                       cmake \

@@ -51,7 +51,6 @@ jobs:
         FROM:
           - 'ubuntu:resolute'
           - 'ubuntu:noble'
-          - 'linuxmintd/mint23-amd64'
           - 'linuxmintd/mint22.3-amd64'
           - 'dhi.io/python:3.14-debian13-sfw-dev'
           - 'dhi.io/python:3.13-debian13-sfw-dev'
