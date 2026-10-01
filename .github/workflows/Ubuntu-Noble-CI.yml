@@ -28,7 +28,9 @@ permissions:
 # Controls when the action will run.
 on:
   push:
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 env:

@@ -27,7 +27,9 @@ permissions:
   pull-requests: read
 on:
   push:
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
   workflow_dispatch:
 jobs:
   Build-and-Test-on-Docker-TestFlows-GitHub-Hetzner-Runners:
