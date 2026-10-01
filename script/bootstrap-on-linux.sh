@@ -34,7 +34,7 @@
 set -e
 
 echo "------------------------------------------"
-echo "--- bootstrap-on-linux.sh | 2026-05-01 ---"
+echo "--- bootstrap-on-linux.sh | 2026-10-01 ---"
 echo "------------------------------------------"
 
 UPDATE_ALL_SYSTEM_PACKAGES="$1"
@@ -95,10 +95,14 @@ function bootstrapOnUbuntu()
   if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
   then
     apt-get -qy upgrade
+#  elif [ "$LINUX_CODENAME" == "resolute" ]
+#  then
+#    # apt on Ubuntu 26.04 "resolute" will automatically update the Firefox snap by default. Do we want that?
+#    snap refresh --hold=forever
   fi
 
   case "$LINUX_CODENAME" in
-    "resolute"|"questing"|"noble"|"jammy")
+    "resolute"|"noble"|"jammy")
       apt-get -qy install \
                       git \
                       cmake \
@@ -109,7 +113,7 @@ function bootstrapOnUbuntu()
                       lsb-release \
                       ninja-build
       ;;
-    "plucky"|"hirsute"|"impish"|"focal"|"bionic"|"xenial")
+    "questing"|"plucky"|"hirsute"|"impish"|"focal"|"bionic"|"xenial")
         echo "Sorry, Ubuntu ${LINUX_CODENAME} is no longer supported"
         exit 2
         ;;
@@ -179,18 +183,9 @@ function bootstrapOnLinuxMint ()
 function bootstrapOnOpenSuseLeap ()
 {
   case "${LINUX_VERSION_ID}" in
-    "15.4"|"15.5"|"15.6")
-      zypper --non-interactive install -y \
-                              libboost_log1_75_0-devel \
-                              libboost_python-py3-1_75_0-devel \
-                              libboost_thread1_75_0-devel \
-                              cmake \
-                              gcc-c++ \
-                              python3-devel \
-                              git \
-                              rpm-build \
-                              clang \
-                              ninja
+    "15.1"|"15.2"|"15.3"|"15.4"|"15.5"|"15.6")
+      echo "Sorry, openSUSE Leap ${LINUX_VERSION_ID} is no longer supported"
+      exit 2
       ;;
     "16.0")
       zypper --non-interactive install -y \
@@ -199,7 +194,7 @@ function bootstrapOnOpenSuseLeap ()
                               libboost_thread1_86_0-devel \
                               cmake \
                               gcc-c++ \
-                              python3-devel \
+                              python313-devel \
                               git \
                               rpm-build \
                               clang \
@@ -215,7 +210,7 @@ function bootstrapOnOpenSuseLeap ()
 function bootstrapOnFedora ()
 {
   export fedoraVersion=${LINUX_VERSION_ID}
-  export fedoraMaxSupportedVersion=44
+  export fedoraMaxSupportedVersion=45
   export fedoraMinSupportedVersion=42
   if [ ${fedoraVersion} -gt ${fedoraMaxSupportedVersion} ]
   then
@@ -246,7 +241,7 @@ function bootstrapOnFedora ()
 function bootstrapOnRedHat ()
 {
   case "${LINUX_VERSION_ID}" in
-    "9.5")
+    "9.6"|"9.7"|"9.8")
       if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
       then
         dnf -y upgrade --refresh
@@ -268,30 +263,7 @@ function bootstrapOnRedHat ()
                           clang \
                           ninja-build
       ;;
-    "9.6"|"9.7")
-      if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
-      then
-        dnf -y upgrade --refresh
-      fi
-      dnf -y install dnf-plugins-core
-      dnf config-manager --set-enabled crb
-      dnf config-manager --set-enabled devel
-      dnf -y install epel-release
-      dnf -y update
-      dnf -y install \
-                          git \
-                          cmake \
-                          boost-devel \
-                          boost-python3-devel \
-                          gcc-c++ \
-                          python3-devel \
-                          rpm-build \
-                          make \
-                          clang \
-                          ninja-build
-      ;;
-    "10.0"|"10.1")
-      dnf -y upgrade --refresh
+    "10.0"|"10.1"|"10.2")
       dnf -y install 'dnf-command(config-manager)'
       dnf -y config-manager --set-enabled crb
       dnf -y config-manager --set-enabled devel
@@ -319,7 +291,7 @@ function bootstrapOnRedHat ()
 function bootstrapOnRockyLinux ()
 {
   case "${LINUX_VERSION_ID}" in
-    "9.5")
+    "9.6"|"9.7"|"9.8")
       if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
       then
         dnf -y upgrade --refresh
@@ -341,30 +313,7 @@ function bootstrapOnRockyLinux ()
                           clang \
                           ninja-build
       ;;
-    "9.6")
-      if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
-      then
-        dnf -y upgrade --refresh
-      fi
-      dnf -y install dnf-plugins-core
-      dnf config-manager --set-enabled crb
-      dnf config-manager --set-enabled devel
-      dnf -y install epel-release
-      dnf -y update
-      dnf -y install \
-                          git \
-                          cmake \
-                          boost-devel \
-                          boost-python3-devel \
-                          gcc-c++ \
-                          python3-devel \
-                          rpm-build \
-                          make \
-                          clang \
-                          ninja-build
-      ;;
-    "10.0"|"10.1")
-      dnf -y upgrade --refresh
+    "10.0"|"10.1"|"10.2")
       dnf -y install 'dnf-command(config-manager)'
       dnf -y config-manager --set-enabled crb
       dnf -y config-manager --set-enabled devel
