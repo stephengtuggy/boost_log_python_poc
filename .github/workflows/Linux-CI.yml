@@ -36,7 +36,7 @@ env:
 
 jobs:
   build_and_test:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     continue-on-error: false
 
     defaults:
@@ -48,7 +48,6 @@ jobs:
       matrix:
         FROM:
           - 'ubuntu:resolute'
-          - 'ubuntu:questing'
           - 'ubuntu:noble'
           - 'linuxmintd/mint22.3-amd64'
           - 'linuxmintd/mint22.2-amd64'
@@ -57,7 +56,7 @@ jobs:
           - 'opensuse/leap:16.0'
           - 'fedora:44'
           - 'fedora:43'
-          - 'rockylinux/rockylinux:10.1'
+          - 'rockylinux/rockylinux:10.2'
         COMPILER:
           - 'gcc'
           - 'clang'
