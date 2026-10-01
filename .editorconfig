@@ -33,7 +33,7 @@ ij_shell_binary_ops_start_line = false
 ij_shell_keep_column_alignment_padding = false
 ij_shell_minify_program = false
 ij_shell_redirect_followed_by_space = false
-ij_shell_switch_cases_indented = false
+ij_shell_switch_cases_indented = true
 ij_shell_use_unix_line_separator = true
 
 [{*.har,*.jsb2,*.jsb3,*.json,*.jsonc,*.postman_collection,*.postman_collection.json,*.postman_environment,*.postman_environment.json,.babelrc,.eslintrc,.prettierrc,.stylelintrc,.ws-context,jest.config}]
