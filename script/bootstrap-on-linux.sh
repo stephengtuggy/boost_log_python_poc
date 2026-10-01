@@ -340,23 +340,24 @@ function bootstrapOnRockyLinux ()
 
 function bootstrapOnManjaro ()
 {
-  pacman -Sy --needed --noconfirm archlinux-keyring manjaro-keyring
+  pacman -Syu --needed --noconfirm archlinux-keyring manjaro-keyring
 
   if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
   then
     pacman -Syyu --refresh --noconfirm
   fi
 
-  pacman -Sy --needed --noconfirm base-devel
-  pacman -Sy --needed --noconfirm cmake \
+  pacman -Syu --needed --noconfirm base-devel
+  pacman -Syu --needed --noconfirm \
                    boost \
                    clang \
+                   cmake \
                    gcc \
                    gcc-libs \
-                   python \
                    git \
                    make \
-                   ninja
+                   ninja \
+                   python
 }
 
 function bootstrapOnFuntoo ()
@@ -382,56 +383,59 @@ function bootstrapOnArch ()
 
   # NOTE: Arch requires GCC 12 right now
   # also installing latest GCC.
-  pacman -Sy --needed --noconfirm \
+  pacman -Syu --needed --noconfirm \
         base-devel \
-        cmake \
         boost \
+        clang \
+        cmake \
         gcc \
         gcc12 \
-        python \
         git \
         make \
-        ninja
+        ninja \
+        python
 }
 
 function bootstrapOnEndeavourOS ()
 {
-  pacman -Sy --needed --noconfirm archlinux-keyring
+  pacman -Syu --needed --noconfirm archlinux-keyring
 
   if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
   then
     pacman -Syyu --refresh --noconfirm
   fi
 
-  pacman -Sy --needed --noconfirm \
+  pacman -Syu --needed --noconfirm \
         base-devel \
-        cmake \
         boost \
+        clang \
+        cmake \
         gcc \
-        python \
         git \
         make \
-        ninja
+        ninja \
+        python
 }
 
 function bootstrapOnCachyOS ()
 {
-#  pacman -Sy --needed --noconfirm archlinux-keyring
+#  pacman -Syu --needed --noconfirm archlinux-keyring
 
   if [ "${UPDATE_ALL_SYSTEM_PACKAGES}" -eq 1 ]
   then
     pacman -Syyu --refresh --noconfirm
   fi
 
-  pacman -Sy --needed --noconfirm \
+  pacman -Syu --needed --noconfirm \
         base-devel \
         boost \
+        clang \
         cmake \
         gcc \
         git \
-        python \
         make \
-        ninja
+        ninja \
+        python
  }
 
 case "${LINUX_ID}" in
