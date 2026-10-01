@@ -60,6 +60,7 @@ jobs:
           - 'fedora:43'
           - 'rockylinux/rockylinux:10.2'
           - 'cachyos/cachyos:latest'
+          - 'archlinux:latest'
         COMPILER:
           - 'gcc'
           - 'clang'
