@@ -337,15 +337,12 @@ function bootstrapOnArch() {
     pacman -Syyu --refresh --noconfirm
   fi
 
-  # NOTE: Arch requires GCC 12 right now
-  # also installing latest GCC.
   pacman -Syu --needed --noconfirm \
     base-devel \
     boost \
     clang \
     cmake \
     gcc \
-    gcc12 \
     git \
     make \
     ninja \
