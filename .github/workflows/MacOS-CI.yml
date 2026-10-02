@@ -27,7 +27,9 @@ permissions:
 
 on:
   push:
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 env:
@@ -48,19 +50,13 @@ jobs:
           - os: macOS-15
             build-type: RelWithDebInfo
             preset-name: macos-pie-enabled-RelWithDebInfo
-          - os: macOS-15-intel
-            build-type: Release
-            preset-name: macos-pie-enabled-release
           - os: macOS-26
             build-type: Debug
             preset-name: macos-pie-enabled-debug
-          - os: macOS-26-intel
-            build-type: RelWithDebInfo
-            preset-name: macos-pie-enabled-RelWithDebInfo
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 2
           submodules: false
@@ -69,7 +65,7 @@ jobs:
         run: ./script/bootstrap 1
 
       - name: Install CMake
-        uses: lukka/get-cmake@591817e96fcad43505fb4eae36172462abb3a42e # v4.3.3
+        uses: lukka/get-cmake@fffaaafeea488556c2c12dad60690008bc1caacb # v4.4.2
 
       - name: Build the code
         working-directory: ${{ github.workspace }}
