@@ -90,10 +90,11 @@ jobs:
 
       - name: Create directories on cache miss
         run: |
-          mkdir -p ${{ github.workspace }}\vcpkgAssets
-          mkdir -p ${{ github.workspace }}\vcpkgBCache
-          mkdir -p ${{ github.workspace }}\vcpkgBin
-          mkdir -p ${{ github.workspace }}\vcpkgBuild
+          New-Item -Force -ItemType Directory -Path "${{ github.workspace }}\vcpkgAssets"
+          New-Item -Force -ItemType Directory -Path "${{ github.workspace }}\vcpkgBCache"
+          New-Item -Force -ItemType Directory -Path "${{ github.workspace }}\vcpkgBin"
+          New-Item -Force -ItemType Directory -Path "${{ github.workspace }}\vcpkgBuild"
+        shell: pwsh
         if: steps.cache-vcpkg-restore.outputs.cache-hit != 'true'
 
       - name: Set up Python
@@ -110,10 +111,22 @@ jobs:
         uses: lukka/run-vcpkg@b1a0dd252f06b9e25b3c022a9a03bd7a427fb6a2 # v11.6
         with:
           binaryCachePath: "${{ github.workspace }}/vcpkgBCache"
+          runVcpkgInstall: true
         env:
           Python3_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
           Python_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
           pythonLocation: ${{ steps.poc-py-setup.outputs.python-path }}
+
+      - name: Save vcpkg cache
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ${{ github.workspace }}\vcpkgAssets
+            ${{ github.workspace }}\vcpkgBCache
+            ${{ github.workspace }}\vcpkgBin
+            ${{ github.workspace }}\vcpkgBuild
+          key: ${{ steps.cache-vcpkg-restore.outputs.cache-primary-key }}
+        if: steps.cache-vcpkg-restore.outputs.cache-hit != 'true'
 
       - name: Build the code
         run: |
@@ -133,14 +146,3 @@ jobs:
           Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
           PYTHONUNBUFFERED: 1
-
-      - name: Save vcpkg cache
-        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: |
-            ${{ github.workspace }}\vcpkgAssets
-            ${{ github.workspace }}\vcpkgBCache
-            ${{ github.workspace }}\vcpkgBin
-            ${{ github.workspace }}\vcpkgBuild
-          key: ${{ steps.cache-vcpkg-restore.outputs.cache-primary-key }}
-        if: steps.cache-vcpkg-restore.outputs.cache-hit != 'true'
