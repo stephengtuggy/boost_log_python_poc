@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 #
-# Copyright © 2023-2025 Stephen G. Tuggy
+# Copyright © 2023-2026 Stephen G. Tuggy
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -34,7 +34,7 @@ SET(CPACK_BUILD_CONFIG ${CMAKE_BUILD_TYPE})
 
 project(boost_log_python_poc
         LANGUAGES CXX
-        VERSION 0.1.5)
+        VERSION 0.1.6)
 
 set(CMAKE_CXX_STANDARD 14)
 SET(CMAKE_CXX_STANDARD_REQUIRED TRUE)
