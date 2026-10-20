@@ -39,16 +39,17 @@ jobs:
       matrix:
         FROM:
           - 'ubuntu:resolute'
-          - 'ubuntu:questing'
           - 'ubuntu:noble'
           - 'linuxmintd/mint22.3-amd64'
-          - 'linuxmintd/mint22.2-amd64'
-          - 'linuxmintd/mint22-amd64'
+          - 'dhi.io/python:3.14-debian13-sfw-dev'
           - 'dhi.io/python:3.13-debian13-sfw-dev'
           - 'opensuse/leap:16.0'
+          - 'fedora:45'
           - 'fedora:44'
           - 'fedora:43'
-          - 'rockylinux/rockylinux:10.1'
+          - 'rockylinux/rockylinux:10.2'
+          - 'cachyos/cachyos:latest'
+          - 'archlinux:latest'
         COMPILER:
           - 'gcc'
           - 'clang'
