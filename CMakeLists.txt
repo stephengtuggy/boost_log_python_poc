@@ -23,7 +23,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.25...4.3 FATAL_ERROR)
 
 IF (POLICY CMP0087)
-    cmake_policy(SET CMP0087 NEW)
+    CMAKE_POLICY(SET CMP0087 NEW)
 ENDIF ()
 
 IF (POLICY CMP0167)
@@ -32,11 +32,11 @@ ENDIF (POLICY CMP0167)
 
 SET(CPACK_BUILD_CONFIG ${CMAKE_BUILD_TYPE})
 
-project(boost_log_python_poc
+PROJECT(boost_log_python_poc
         LANGUAGES CXX
         VERSION 0.1.6)
 
-set(CMAKE_CXX_STANDARD 14)
+SET(CMAKE_CXX_STANDARD 14)
 SET(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 SET(CMAKE_CXX_EXTENSIONS ON)
 
@@ -45,8 +45,8 @@ INCLUDE(InstallRequiredSystemLibraries)
 
 OPTION(ENABLE_PIE "Enable Position Independent Executables" ON)
 
-include(CheckPIESupported)
-check_pie_supported()
+INCLUDE(CheckPIESupported)
+CHECK_PIE_SUPPORTED()
 UNSET(CMAKE_POSITION_INDEPENDENT_CODE)
 IF (ENABLE_PIE)
     SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -70,18 +70,18 @@ MESSAGE(STATUS "Python library : ${Python3_LIBRARIES} (${Python3_VERSION})")
 MESSAGE(STATUS "Python include dir : ${Python3_INCLUDE_DIRS}")
 
 FIND_PACKAGE(Boost REQUIRED COMPONENTS ${BOOST_PYTHON_COMPONENT} log log_setup)
-include_directories(${Python3_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${Python3_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
-add_executable(boost_log_python_poc main.cpp)
-target_compile_definitions(boost_log_python_poc PUBLIC "BOOST_PYTHON_NO_PY_SIGNATURES" "BOOST_ALL_DYN_LINK" "$<$<CONFIG:Debug>:BOOST_DEBUG_PYTHON>")
+ADD_EXECUTABLE(boost_log_python_poc main.cpp)
+TARGET_COMPILE_DEFINITIONS(boost_log_python_poc PUBLIC "BOOST_PYTHON_NO_PY_SIGNATURES" "BOOST_ALL_DYN_LINK" "$<$<CONFIG:Debug>:BOOST_DEBUG_PYTHON>")
 if (WIN32)
-    target_compile_definitions(boost_log_python_poc PUBLIC BOOST_USE_WINAPI_VERSION=0x0A00)
-    target_compile_definitions(boost_log_python_poc PUBLIC _WIN32_WINNT=0x0A00)
-    target_compile_definitions(boost_log_python_poc PUBLIC WINVER=0x0A00)
-    target_compile_definitions(boost_log_python_poc PUBLIC "$<$<CONFIG:Debug>:Py_DEBUG>")
+    TARGET_COMPILE_DEFINITIONS(boost_log_python_poc PUBLIC BOOST_USE_WINAPI_VERSION=0x0A00)
+    TARGET_COMPILE_DEFINITIONS(boost_log_python_poc PUBLIC _WIN32_WINNT=0x0A00)
+    TARGET_COMPILE_DEFINITIONS(boost_log_python_poc PUBLIC WINVER=0x0A00)
+    TARGET_COMPILE_DEFINITIONS(boost_log_python_poc PUBLIC "$<$<CONFIG:Debug>:Py_DEBUG>")
 endif ()
 
-target_link_libraries(boost_log_python_poc PRIVATE ${Python3_LIBRARIES} ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(boost_log_python_poc PRIVATE ${Python3_LIBRARIES} ${Boost_LIBRARIES})
 
 # Should we install gtest?
 OPTION(INSTALL_GTEST "Should we download and install GTest?" ON)
