@@ -154,11 +154,6 @@
             },
             "environment": {
                 "VERBOSE": "ON"
-            },
-            "cacheVariables": {
-                "CMAKE_PREFIX_PATH": "/usr/local",
-                "CMAKE_FIND_FRAMEWORK": "LAST",
-                "PythonInstalledVia": "Homebrew"
             }
         },
         {
