@@ -47,11 +47,20 @@ jobs:
           - os: macOS-15
             build-type: RelWithDebInfo
             preset-name: macos-pie-enabled-RelWithDebInfo
+            python-version: 3.14.7
           - os: macOS-26
             build-type: Debug
             preset-name: macos-pie-enabled-debug
+            python-version: 3.14.7
 
     steps:
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        id: vega-py-setup
+        with:
+          python-version: ${{ matrix.python-version }}
+          update-environment: false
+
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -67,6 +76,9 @@ jobs:
       - name: Build the code
         working-directory: ${{ github.workspace }}
         env:
+          Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
+          Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
+          pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
           PYTHONHOME: ""
           PYTHONPATH: ""
         run: ./script/build --preset_name=${{ matrix.preset-name }}
