@@ -29,4 +29,4 @@ param(
 [String]$binaryDir = "$baseDir\build\$PresetName"
 
 cmake --preset $PresetName
-cmake --build --preset "build-$PresetName" -v
+cmake --build --preset "build-$PresetName"
