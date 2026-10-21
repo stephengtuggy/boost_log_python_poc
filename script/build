@@ -67,4 +67,4 @@ cmake --preset "$preset_name"
 
 echo "Preset name is $preset_name"
 
-VERBOSE=1 cmake --build --preset="build-${preset_name}"
+cmake --build --preset="build-${preset_name}"
