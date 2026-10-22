@@ -40,9 +40,6 @@ PROJECT(boost_log_python_poc
         LANGUAGES CXX
         VERSION 0.1.6)
 
-# Force-unset or disable find debug modes globally
-set(CMAKE_FIND_DEBUG_MODE OFF CACHE BOOL "Disable verbose find logs" FORCE)
-
 SET(CMAKE_CXX_STANDARD 14)
 SET(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 SET(CMAKE_CXX_EXTENSIONS ON)

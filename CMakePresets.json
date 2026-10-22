@@ -12,10 +12,7 @@
             "displayName": "Default Config",
             "description": "Default build using Ninja generator",
             "generator": "Ninja",
-            "binaryDir": "build/${presetName}",
-            "debug": {
-                "output": true
-            }
+            "binaryDir": "build/${presetName}"
         },
         {
             "name": "debug",
