@@ -110,6 +110,7 @@ jobs:
         with:
           binaryCachePath: "${{ github.workspace }}/vcpkgBCache"
           runVcpkgInstall: true
+          runVcpkgFormatString: '[`install`, `--recurse`, `--clean-after-build`, `--x-install-root`, `$[env.VCPKG_INSTALLED_DIR]`, `--triplet`, `$[env.VCPKG_DEFAULT_TRIPLET]`, `--debug`]'
         env:
           Python3_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
           Python_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
