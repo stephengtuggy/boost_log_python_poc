@@ -128,19 +128,14 @@ jobs:
           key: ${{ steps.cache-vcpkg-restore.outputs.cache-primary-key }}
         if: steps.cache-vcpkg-restore.outputs.cache-hit != 'true'
 
-      - name: Build the code
-        run: |
-          & "${{ github.workspace }}\\script\\build.ps1" -PresetName "${{ matrix.preset-name }}"
-        shell: pwsh
-        env:
-          Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
-          Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
-          pythonLocation: ${{ steps.vega-py-setup.outputs.python-path }}
-
-      - name: Test the code
-        run: |
-          & "${{ github.workspace }}\\script\\test.ps1" -PresetName "${{ matrix.preset-name }}" -BuildType "${{ matrix.build-type }}"
-        shell: pwsh
+      - name: Run CMake (Configure, Build, and Test)
+        uses: lukka/run-cmake@5d55ea7949e25f69f0ecb516d8d572297e03a956  # v10.9
+        with:
+          configurePreset: "${{ matrix.preset-name }}"
+          buildPreset: "build-${{ matrix.preset-name }}"
+          buildPresetAdditionalArgs: "[`--config`, `${{ matrix.build-type }}`]"
+          testPreset: "test-${{ matrix.preset-name }}"
+          testPresetAdditionalArgs: "[`--config`, `${{ matrix.build-type }}`]"
         env:
           Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
