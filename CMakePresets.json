@@ -355,7 +355,6 @@
                 "VCPKG_HOST_TRIPLET": "x64-win10"
             },
             "cacheVariables": {
-                "CMAKE_INITIAL_CACHE": "${sourceDir}/silence.cmake",
                 "CMAKE_FIND_DEBUG_MODE": {
                     "type": "BOOL",
                     "value": false
