@@ -12,10 +12,7 @@
             "displayName": "Default Config",
             "description": "Default build using Ninja generator",
             "generator": "Ninja",
-            "binaryDir": "build/${presetName}",
-            "debug": {
-                "output": true
-            }
+            "binaryDir": "build/${presetName}"
         },
         {
             "name": "debug",
@@ -358,16 +355,16 @@
                 "VCPKG_HOST_TRIPLET": "x64-win10"
             },
             "cacheVariables": {
+                "CMAKE_FIND_DEBUG_MODE": {
+                    "type": "BOOL",
+                    "value": false
+                },
                 "CMAKE_TOOLCHAIN_FILE": {
                     "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
                     "type": "FILEPATH"
                 },
                 "VCPKG_TARGET_TRIPLET": "x64-win10",
                 "VCPKG_HOST_TRIPLET": "x64-win10"
-            },
-            "debug": {
-                "output": true,
-                "find": true
             },
             "condition": {
                 "type": "equals",

@@ -58,7 +58,7 @@ jobs:
           submodules: false
 
       - name: Bootstrap
-        run: sudo ./script/bootstrap 1
+        run: sudo ./script/bootstrap 0
 
       - name: Build the code
         env:

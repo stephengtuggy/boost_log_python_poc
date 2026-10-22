@@ -33,6 +33,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+  CMAKE_FIND_DEBUG_MODE: "OFF"
+  CMAKE_VERBOSE_MAKEFILE: "OFF"
+
 jobs:
   build_and_test:
     # The type of runner that the job will run on
@@ -47,7 +51,7 @@ jobs:
             build-type: Debug
             preset-name: VS2022Win64-pie-enabled-debug
             python-version: 3.12.10
-          - os: windows-2025-vs2026
+          - os: windows-2025
             triplet: x64-win10
             build-type: Release
             preset-name: VS2026Win64-pie-enabled-release
@@ -64,8 +68,11 @@ jobs:
       VCPKG_OVERLAY_PORTS: ${{ github.workspace }}\custom-triplets
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
       VCPKG_DEFAULT_HOST_TRIPLET: ${{ matrix.triplet }}
+      VCPKG_DISABLE_METRICS: 'ON'
       PYTHONHOME: ""
       PYTHONPATH: ""
+      CMAKE_FIND_DEBUG_MODE: "OFF"
+      CMAKE_VERBOSE_MAKEFILE: "OFF"
 
     steps:
       - name: checkout
@@ -109,6 +116,7 @@ jobs:
         with:
           binaryCachePath: "${{ github.workspace }}/vcpkgBCache"
           runVcpkgInstall: true
+          runVcpkgFormatString: '[`install`, `--recurse`, `--clean-after-build`, `--x-install-root`, `$[env.VCPKG_INSTALLED_DIR]`, `--triplet`, `$[env.VCPKG_DEFAULT_TRIPLET]`]'
         env:
           Python3_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
           Python_ROOT_DIR: ${{ steps.poc-py-setup.outputs.python-path }}
@@ -125,10 +133,12 @@ jobs:
           key: ${{ steps.cache-vcpkg-restore.outputs.cache-primary-key }}
         if: steps.cache-vcpkg-restore.outputs.cache-hit != 'true'
 
-      - name: Build the code
-        run: |
-          & "${{ github.workspace }}\\script\\build.ps1" -PresetName "${{ matrix.preset-name }}"
-        shell: pwsh
+      - name: Run CMake (Configure and Build)
+        uses: lukka/run-cmake@5d55ea7949e25f69f0ecb516d8d572297e03a956  # v10.9
+        with:
+          configurePreset: "${{ matrix.preset-name }}"
+          buildPreset: "build-${{ matrix.preset-name }}"
+          buildPresetAdditionalArgs: "[`--config`, `${{ matrix.build-type }}`]"
         env:
           Python3_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
           Python_ROOT_DIR: ${{ steps.vega-py-setup.outputs.python-path }}
