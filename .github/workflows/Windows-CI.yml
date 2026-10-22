@@ -67,6 +67,7 @@ jobs:
       VCPKG_DISABLE_METRICS: 'ON'
       PYTHONHOME: ""
       PYTHONPATH: ""
+      CMAKE_FIND_DEBUG_MODE: "OFF"
 
     steps:
       - name: checkout
