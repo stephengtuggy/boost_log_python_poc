@@ -33,6 +33,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+  CMAKE_FIND_DEBUG_MODE: "OFF"
+  CMAKE_VERBOSE_MAKEFILE: "OFF"
+
 jobs:
   build_and_test:
     # The type of runner that the job will run on
