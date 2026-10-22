@@ -133,7 +133,7 @@ jobs:
           key: ${{ steps.cache-vcpkg-restore.outputs.cache-primary-key }}
         if: steps.cache-vcpkg-restore.outputs.cache-hit != 'true'
 
-      - name: Run CMake (Configure, Build, and Test)
+      - name: Run CMake (Configure and Build)
         uses: lukka/run-cmake@5d55ea7949e25f69f0ecb516d8d572297e03a956  # v10.9
         with:
           configurePreset: "${{ matrix.preset-name }}"
